@@ -24,7 +24,9 @@ Tests cover program selection, workout navigation, expanding/collapsing exercise
 
 ## Add or change training content
 
-Edit `src/data/programs.js`; the app renders this data automatically. A program has an `id`, display name, summary and `workouts` array. Give each program and workout a unique ID. A workout includes day, title, focus, description, duration and an `exercises` array. An exercise looks like:
+Edit `src/data/programs.js`; the app renders this data automatically. A program has an `id`, display name, summary and `workouts` array. Give each program and workout a unique ID. Each workout includes day, title, focus, description, duration, an `exercises` array and the shared `warmup` array. The 14 sample warm-up moves are defined once and automatically attached to every workout, so edit that shared list to change the warm-up everywhere. The three-day plan schedule is assembled at the bottom of the file: its strength, conditioning and power sessions are repeated in week two, with warm-up-only sessions on Tuesday, Thursday and Saturday.
+
+An exercise looks like:
 
 ```js
 {
@@ -41,7 +43,7 @@ Edit `src/data/programs.js`; the app renders this data automatically. A program 
 }
 ```
 
-Copy an existing object and edit its fields. Add/remove workouts or exercises in their respective arrays. Keep IDs unique within each program because they are used for progress. For local exercise images, put files under `public/images/` and use a URL such as `/images/step-up.jpg`.
+Copy an existing object and edit its fields. Add/remove workouts or exercises in their respective arrays. Keep workout IDs unique within each program because they are used for progress. For local exercise images, put files under `public/images/` and use a URL such as `/images/step-up.jpg`. `warmupOnly: true` marks a schedule entry that consists of the shared warm-up alone; it still has its own timer and completion record.
 
 The sample material is illustrative and is not individualized medical or coaching advice.
 
