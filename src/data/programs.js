@@ -38,3 +38,42 @@ export const programs = [
    {id:'side-plank-3',name:'Side plank',sets:'3',reps:'20 sec / side',instructions:'Support yourself on your forearm and side of your foot or knee. Lift hips and hold a straight line.',watch:'Keep shoulder away from your ear and hips lifted.',easier:'Bend your knees and support yourself from them.',harder:'Hold longer or lift the top leg slightly.',snow:'Side-body endurance supports a controlled, centered stance.'}]}
  ]}
 ];
+
+// A shared warm-up is shown before every session in both plans.
+const warmupExercises = [
+ {id:'march-in-place',name:'March in place',sets:'1',reps:'60 sec',focus:'Raise body temperature',instructions:'March comfortably, lifting each knee and swinging your arms naturally.',watch:'Stay tall and land softly.',easier:'March slowly with smaller steps.',harder:'Build to a brisk march while staying relaxed.',snow:'Raises readiness for movement before you head onto the snow.'},
+ {id:'ankle-rocks',name:'Ankle rocks',sets:'1',reps:'10 / side',focus:'Ankle mobility',instructions:'In a split stance, gently move your front knee forward over your toes and return.',watch:'Keep the whole foot grounded and knee aligned with toes.',easier:'Use a smaller range and hold a wall.',harder:'Pause briefly at the end of each comfortable rep.',snow:'Helps prepare ankle movement for a responsive stance in ski boots.'},
+ {id:'calf-raises-wu',name:'Calf raises',sets:'1',reps:'12',focus:'Lower-leg activation',instructions:'Rise smoothly onto the balls of both feet, then lower with control.',watch:'Keep pressure even across the feet.',easier:'Use a smaller range or hold support.',harder:'Pause at the top for two seconds.',snow:'Wakes up the lower legs for balance and pressure adjustments.'},
+ {id:'heel-toe-rocks',name:'Heel-to-toe rocks',sets:'1',reps:'10',focus:'Foot control',instructions:'Shift gently from heels toward the balls of your feet without lifting either end for long.',watch:'Keep the movement small and controlled.',easier:'Hold a stable support.',harder:'Slow each shift and pause at both ends.',snow:'Practices subtle balance shifts used to manage pressure on skis.'},
+ {id:'bodyweight-squat-wu',name:'Bodyweight squats',sets:'1',reps:'10',focus:'Leg activation',instructions:'Sit your hips back and down, then stand smoothly with feet grounded.',watch:'Keep knees tracking in line with toes.',easier:'Use a shallow range or sit to a chair.',harder:'Add a two-second pause near the bottom.',snow:'Prepares the legs for repeated bending and absorbing terrain.'},
+ {id:'hip-hinge-wu',name:'Hip hinges',sets:'1',reps:'10',focus:'Hip pattern',instructions:'Soften your knees, push hips back with a long spine, then stand tall.',watch:'Move from the hips without rounding your back.',easier:'Slide hands only to mid-thigh.',harder:'Reach hips farther back while keeping your spine long.',snow:'Rehearses a balanced athletic position for skiing.'},
+ {id:'reverse-lunge-wu',name:'Alternating reverse lunges',sets:'1',reps:'6 / side',focus:'Single-leg activation',instructions:'Step one foot back, lower slightly, return to standing, and alternate sides.',watch:'Keep the front foot grounded and torso comfortable.',easier:'Use a short step and shallow bend.',harder:'Add a gentle overhead reach.',snow:'Prepares each leg for independent balance and control.'},
+ {id:'side-steps-wu',name:'Lateral steps',sets:'1',reps:'8 / side',focus:'Hip activation',instructions:'Take small controlled steps sideways, keeping knees softly bent.',watch:'Keep toes pointing forward and avoid letting knees collapse inward.',easier:'Take smaller steps while standing taller.',harder:'Use a light resistance band if available.',snow:'Wakes up the muscles that help control side-to-side movement.'},
+ {id:'arm-circles-wu',name:'Arm circles',sets:'1',reps:'10 / direction',focus:'Shoulder mobility',instructions:'Make relaxed small circles with both arms, then reverse direction.',watch:'Keep shoulders relaxed away from your ears.',easier:'Use smaller circles.',harder:'Gradually increase the circle size.',snow:'Prepares the upper body to stay relaxed and balanced.'},
+ {id:'torso-rotations-wu',name:'Standing torso rotations',sets:'1',reps:'8 / side',focus:'Trunk mobility',instructions:'Stand tall and rotate your ribcage gently from side to side.',watch:'Let hips stay mostly forward; keep the range comfortable.',easier:'Make smaller rotations.',harder:'Add a relaxed arm sweep with each turn.',snow:'Encourages comfortable upper-body movement over stable legs.'},
+ {id:'standing-knee-hugs',name:'Standing knee hugs',sets:'1',reps:'6 / side',focus:'Hip mobility',instructions:'Lift one knee and gently hug it toward your chest, then switch sides.',watch:'Stand tall and use support if balance is uncertain.',easier:'Lift the knee without holding it.',harder:'Pause for two seconds while balanced.',snow:'Practices balance while moving one leg at a time.'},
+ {id:'leg-swings-front',name:'Front-to-back leg swings',sets:'1',reps:'8 / side',focus:'Dynamic mobility',instructions:'Hold a support and swing one relaxed leg forward and back through a small range.',watch:'Keep your trunk still and swing without forcing range.',easier:'Use a very small swing.',harder:'Gradually increase range while staying controlled.',snow:'Prepares the hips for dynamic movement on varied terrain.'},
+ {id:'leg-swings-side',name:'Side-to-side leg swings',sets:'1',reps:'8 / side',focus:'Dynamic mobility',instructions:'Hold a support and swing one leg gently across the body and out to the side.',watch:'Keep the pelvis level and movement smooth.',easier:'Reduce the swing range.',harder:'Pause briefly at each end of the swing.',snow:'Gets the hips ready for lateral adjustments while skiing.'},
+ {id:'easy-skater-step',name:'Easy skater steps',sets:'1',reps:'8 / side',focus:'Lateral readiness',instructions:'Step side to side, shifting weight onto each leg with a soft knee.',watch:'Keep steps quiet and balanced; no jumping is needed.',easier:'Make the steps narrower and slower.',harder:'Reach the free foot slightly farther behind.',snow:'Introduces a gentle side-to-side weight shift used in turns.'}
+];
+
+for (const plan of programs) {
+  for (const workout of plan.workouts) workout.warmup = warmupExercises;
+}
+
+const threeDay = programs.find(plan => plan.id === 'three-day');
+const weekOne = threeDay.workouts;
+const warmupOnly = (week, day) => ({
+ id:`three-${week}-${day.toLowerCase()}-warmup`, day:`Week ${week} · ${day}`, title:'Warm-up', focus:'Preparation',
+ description:'A short movement preparation session. Complete the shared warm-up at an easy, comfortable pace.', duration:'10 min', warmupOnly:true, exercises:[], warmup:warmupExercises
+});
+threeDay.duration = '2 weeks';
+threeDay.weeks = '2 weeks · 3 training days + warm-up days';
+threeDay.workouts = [
+ {...weekOne[0],day:'Week 1 · Monday'}, warmupOnly(1,'Tuesday'),
+ {...weekOne[1],day:'Week 1 · Wednesday'}, warmupOnly(1,'Thursday'),
+ {...weekOne[2],day:'Week 1 · Friday'}, warmupOnly(1,'Saturday'),
+ {...weekOne[0],id:'three-a-week-2',day:'Week 2 · Monday'}, warmupOnly(2,'Tuesday'),
+ {...weekOne[1],id:'three-b-week-2',day:'Week 2 · Wednesday'}, warmupOnly(2,'Thursday'),
+ {...weekOne[2],id:'three-c-week-2',day:'Week 2 · Friday'}, warmupOnly(2,'Saturday')
+];
