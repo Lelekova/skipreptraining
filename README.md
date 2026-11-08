@@ -1,6 +1,6 @@
 # Snowbound — Ski Prep
 
-A responsive React single-page application for two sample ski-preparation training plans. Workout completion and an active timer are stored in browser `localStorage`; no account or server is required.
+A responsive React single-page application for two sample ski-preparation training plans. Workout completion history (one local date per completed session) and an active timer are stored in browser `localStorage`; no account or server is required.
 
 ## Run locally
 
@@ -49,4 +49,4 @@ The sample material is illustrative and is not individualized medical or coachin
 
 ## Browser storage
 
-Progress is saved under `snowbound-training-v1` in `localStorage`. A workout is marked complete when its timer is stopped or reaches two hours; the displayed date uses the browser's local time zone. An active timer survives reloads. Clearing site data removes progress. Storage is specific to the browser/device and does not sync across devices; this app does not implement account sign-in or a remote session.
+Progress is saved under `snowbound-training-v1` in `localStorage`. Each workout page lists all completion dates, newest first; the schedule row shows only the latest date. A workout is recorded when its timer is stopped or reaches two hours; dates use the browser's local time zone. Existing single-date completion records are converted to one-entry histories when loaded. An active timer survives reloads. Clearing site data removes progress. Storage is specific to the browser/device and does not sync across devices; this app does not implement account sign-in or a remote session.

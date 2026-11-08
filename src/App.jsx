@@ -15,9 +15,19 @@ import {programs} from './data/programs.js';
 
 const STORAGE_KEY = 'snowbound-training-v1', MAX_TIMER_MS = 2 * 60 * 60 * 1000;
 
+function normalizeHistory(value) {
+    if (Array.isArray(value)) return value.filter(ts => Number.isFinite(ts));
+    return Number.isFinite(value) ? [value] : []
+}
+
 function readSaved() {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {completed: {}, activeTimer: null}
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        return {
+            ...saved,
+            completed: Object.fromEntries(Object.entries(saved.completed || {}).map(([key, value]) => [key, normalizeHistory(value)])),
+            activeTimer: saved.activeTimer || null
+        }
     } catch {
         return {completed: {}, activeTimer: null}
     }
@@ -52,7 +62,7 @@ export default function App() {
 
     function finish(key, ts = Date.now()) {
         setSaved(s => ({
-            completed: {...s.completed, [key]: ts},
+            completed: {...s.completed, [key]: [...normalizeHistory(s.completed[key]), ts]},
             activeTimer: s.activeTimer?.workoutKey === key ? null : s.activeTimer
         }))
     }
@@ -78,9 +88,10 @@ export default function App() {
 
     const progress = useMemo(() => programs.map(p => ({
         ...p,
-        done: p.workouts.filter(w => saved.completed[`${p.id}:${w.id}`]).length
+        done: p.workouts.filter(w => normalizeHistory(saved.completed[`${p.id}:${w.id}`]).length > 0).length
     })), [saved.completed]);
-    const key = workout ? `${selectedProgramId}:${workout.id}` : null, completed = key ? saved.completed[key] : null,
+    const key = workout ? `${selectedProgramId}:${workout.id}` : null,
+        history = key ? normalizeHistory(saved.completed[key]) : [], completed = history.length > 0,
         elapsed = saved.activeTimer ? Math.min(now - saved.activeTimer.startedAt, MAX_TIMER_MS) : 0;
     return <div className="app-shell">
         <header className="topbar">
@@ -153,18 +164,17 @@ export default function App() {
                 <section className="workout-list">
                     <div className="list-heading">
                         <span>TRAINING SCHEDULE</span><span>{program.workouts.length} SESSIONS</span></div>
-                    {program.workouts.map((item, i) => {
-                        const done = saved.completed[`${program.id}:${item.id}`];
+                    {program.workouts.map(item => {
+                        const done = normalizeHistory(saved.completed[`${program.id}:${item.id}`]);
                         return <button className="workout-row" key={item.id} onClick={() => {
                             setSelectedWorkoutId(item.id);
                             setExpandedExercise(null);
                             setWarmupOpen(Boolean(item.warmupOnly));
                             setExercisesOpen(true)
-                        }}><span
-                            className="workout-day">{item.day}</span><span
+                        }}><span className="workout-day">{item.day}</span><span
                             className="workout-title">{item.title}<small>{item.warmupOnly ? 'Warm-up only' : `${item.focus} · ${item.exercises.length} exercises`}</small></span><span
-                            className="workout-duration"><Clock3 size={14}/>{item.duration}</span>{done &&
-                            <span className="done-chip"><Check size={13}/>{localDate(done)}</span>}<span
+                            className="workout-duration"><Clock3 size={14}/>{item.duration}</span>{done.length > 0 &&
+                            <span className="done-chip"><Check size={13}/>{localDate(done.at(-1))}</span>}<span
                             className="row-arrow">↗</span></button>
                     })}</section>
             </>}
@@ -182,8 +192,10 @@ export default function App() {
                             size={15}/>{workout.warmupOnly ? 'Warm-up only' : `${workout.warmup.length} warm-up + ${workout.exercises.length} exercises`}</span>
                         </div>
                         <p>{workout.description}</p>{completed &&
-                        <div className="completion-banner"><span className="completion-check"><Check
-                            size={17}/></span><span>WORKOUT COMPLETE<strong>{localDate(completed)}</strong></span>
+                        <div className="completion-banner"><span className="completion-check"><Check size={17}/></span>
+                            <div className="completion-history">
+                                <span>WORKOUT HISTORY</span>{history.slice().reverse().map((date, index) => <strong
+                                key={`${date}-${index}`}>{localDate(date)}</strong>)}</div>
                         </div>}
                         <button className={`start-button ${saved.activeTimer ? 'is-disabled' : ''}`} onClick={start}
                                 disabled={Boolean(saved.activeTimer)}><Play size={15}
@@ -245,12 +257,12 @@ function ExerciseSection({
                 </h2>
             </div>
             <span className="expand-note">TAP AN EXERCISE TO LEARN MORE</span></div>
-        {isOpen && <div className="exercise-list" id={contentId}>{exercises.map((ex, i) => {
+        {isOpen && <div className="exercise-list" id={contentId}>{exercises.map(ex => {
             const key = `${sectionId}:${ex.id}`, open = expandedExercise === key;
             return <article className={`exercise-card ${open ? 'open' : ''}`} key={key}>
                 <button className="exercise-summary" aria-expanded={open} onClick={() => onToggle(open ? null : key)}>
                     <span
-                    className="exercise-name">{ex.name}<small>{ex.focus || 'CONTROLLED MOVEMENT'}</small></span><span
+                        className="exercise-name">{ex.name}<small>{ex.focus || 'CONTROLLED MOVEMENT'}</small></span><span
                     className="exercise-prescription"><strong>{ex.sets}</strong><small>SETS</small></span><span
                     className="exercise-prescription reps"><strong>{ex.reps}</strong><small>REPS / TIME</small></span><span
                     className="expand-toggle"><ChevronDown size={17}/></span></button>
