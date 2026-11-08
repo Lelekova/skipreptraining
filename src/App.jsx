@@ -160,7 +160,7 @@ export default function App() {
                             setExpandedExercise(null);
                             setWarmupOpen(Boolean(item.warmupOnly));
                             setExercisesOpen(true)
-                        }}><span className="workout-number">{String(i + 1).padStart(2, '0')}</span><span
+                        }}><span
                             className="workout-day">{item.day}</span><span
                             className="workout-title">{item.title}<small>{item.warmupOnly ? 'Warm-up only' : `${item.focus} · ${item.exercises.length} exercises`}</small></span><span
                             className="workout-duration"><Clock3 size={14}/>{item.duration}</span>{done &&
@@ -249,7 +249,7 @@ function ExerciseSection({
             const key = `${sectionId}:${ex.id}`, open = expandedExercise === key;
             return <article className={`exercise-card ${open ? 'open' : ''}`} key={key}>
                 <button className="exercise-summary" aria-expanded={open} onClick={() => onToggle(open ? null : key)}>
-                    <span className="exercise-number">{String(i + 1).padStart(2, '0')}</span><span
+                    <span
                     className="exercise-name">{ex.name}<small>{ex.focus || 'CONTROLLED MOVEMENT'}</small></span><span
                     className="exercise-prescription"><strong>{ex.sets}</strong><small>SETS</small></span><span
                     className="exercise-prescription reps"><strong>{ex.reps}</strong><small>REPS / TIME</small></span><span
