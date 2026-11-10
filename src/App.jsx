@@ -295,7 +295,7 @@ function ExerciseSection({
                     <span
                         className="exercise-name">{ex.name}<small>{ex.focus || 'CONTROLLED MOVEMENT'}</small></span><span
                     className="exercise-prescription"><strong>{ex.sets}</strong><small>SETS</small></span><span
-                    className="exercise-prescription reps"><strong>{ex.reps}</strong><small>REPS / TIME</small></span><span
+                    className="exercise-prescription reps"><strong>{ex.reps}</strong><small>{(ex.measure || 'reps').toUpperCase()}</small></span><span
                     className="expand-toggle"><ChevronDown size={17}/></span></button>
                 {open && <div className="exercise-details">{ex.image &&
                     <img className="exercise-image" src={ex.image} alt={`${ex.name} demonstration`} loading="lazy"/>}
