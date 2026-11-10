@@ -268,9 +268,11 @@ export default function App() {
 function Detail({
     label, text
 }){
+    const value = typeof text === 'string' ? text.trim() : text;
+    if (!value) return null;
     return <div className="detail-item">
         <div className="detail-label">{label}</div>
-        <p>{text}</p></div>
+        <p>{value}</p></div>
 }
 
 function ExerciseSection({
@@ -289,7 +291,9 @@ function ExerciseSection({
             </div>
             <span className="expand-note">TAP AN EXERCISE TO LEARN MORE</span></div>
         {isOpen && <div className="exercise-list" id={contentId}>{exercises.map(ex => {
-            const key = `${sectionId}:${ex.id}`, open = expandedExercise === key;
+            const key = `${sectionId}:${ex.id}`, open = expandedExercise === key,
+                hasDetails = ['instructions', 'watch', 'easier', 'harder'].some(field => typeof ex[field] === 'string' && ex[field].trim()),
+                hasSnow = typeof ex.snow === 'string' && ex.snow.trim();
             return <article className={`exercise-card ${open ? 'open' : ''}`} key={key}>
                 <button className="exercise-summary" aria-expanded={open} onClick={() => onToggle(open ? null : key)}>
                     <span
@@ -298,13 +302,13 @@ function ExerciseSection({
                     className="exercise-prescription reps"><strong>{ex.reps}</strong><small>{(ex.measure || 'reps').toUpperCase()}</small></span><span
                     className="expand-toggle"><ChevronDown size={17}/></span></button>
                 {open && <div className="exercise-details">{ex.image &&
-                    <img className="exercise-image" src={ex.image} alt={`${ex.name} demonstration`} loading="lazy"/>}
+                    <img className="exercise-image" src={ex.image} alt={`${ex.name} demonstration`}
+                         loading="lazy"/>}{hasDetails &&
                     <div className="detail-grid"><Detail label="HOW TO DO IT" text={ex.instructions}/><Detail
                         label="PAY ATTENTION TO" text={ex.watch}/><Detail label="MAKE IT EASIER"
                                                                           text={ex.easier}/><Detail
-                        label="MAKE IT HARDER" text={ex.harder}/></div>
+                        label="MAKE IT HARDER" text={ex.harder}/></div>}{hasSnow &&
                     <div className="snow-benefit"><span><Mountain size={16}/></span><p><small>WHY IT HELPS ON
-                        SNOW</small>{ex.snow}</p></div>
-                </div>}</article>
+                        SNOW</small>{ex.snow}</p></div>}</div>}</article>
         })}</div>}</section>
 }
