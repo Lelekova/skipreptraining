@@ -43,7 +43,7 @@ function localDate(ts) {
 }
 
 export default function App() {
-    const [selectedProgramId, setSelectedProgramId] = useState(null), [selectedWorkoutId, setSelectedWorkoutId] = useState(null), [expandedExercise, setExpandedExercise] = useState(null), [warmupOpen, setWarmupOpen] = useState(false), [exercisesOpen, setExercisesOpen] = useState(true), [saved, setSaved] = useState(readSaved), [now, setNow] = useState(Date.now());
+    const [selectedProgramId, setSelectedProgramId] = useState(null), [selectedWorkoutId, setSelectedWorkoutId] = useState(null), [expandedExercise, setExpandedExercise] = useState(null), [warmupOpen, setWarmupOpen] = useState(false), [exercisesOpen, setExercisesOpen] = useState(true), [showInfo, setShowInfo] = useState(false), [saved, setSaved] = useState(readSaved), [now, setNow] = useState(Date.now());
     const program = programs.find(p => p.id === selectedProgramId),
         workout = program?.workouts.find(w => w.id === selectedWorkoutId);
     useEffect(() => {
@@ -83,7 +83,8 @@ export default function App() {
     function reset(programId = null) {
         setSelectedProgramId(programId);
         setSelectedWorkoutId(null);
-        setExpandedExercise(null)
+        setExpandedExercise(null);
+        setShowInfo(false)
     }
 
     const progress = useMemo(() => programs.map(p => ({
@@ -101,7 +102,7 @@ export default function App() {
             <div className="top-meta"><span className="season-dot"/> YOUR SEASON STARTS HERE</div>
         </header>
         <main className="main-content">
-            {!program && <>
+            {!program && !showInfo && <>
                 <section className="hero">
                     <div className="hero-copy">
                         <div className="eyebrow"><Snowflake size={14}/> THE MOUNTAIN IS CALLING</div>
@@ -150,6 +151,36 @@ export default function App() {
                 <aside className="tip-strip"><span className="tip-icon"><Snowflake size={18}/></span><p><strong>A note
                     before you begin</strong><br/>Start at a level that feels right for you. Consistency beats intensity
                     every time.</p><span className="tip-scribble">✳</span></aside>
+                <div className="home-info-link">
+                    <button onClick={() => setShowInfo(true)}>ABOUT THIS PROGRAM &amp; ITS AUTHOR <span>↗</span>
+                    </button>
+                </div>
+            </>}
+            {showInfo && !program && <>
+                <button className="back-link" onClick={() => setShowInfo(false)}><ArrowLeft size={16}/> BACK TO HOME
+                </button>
+                <section className="info-page">
+                    <div className="eyebrow">SNOWBOUND · INFORMATION</div>
+                    <h1>About this <span className="title-period">program.</span></h1><p className="info-intro">A little
+                    context about the training content, its sources, and the person behind this project.</p>
+                    <section className="info-card"><h2>About the training content</h2><p>This application is a personal
+                        ski-preparation project. The current program and exercise descriptions are sample content
+                        provided to demonstrate the app. They have not been independently validated as a personalized
+                        training plan.</p><p>Before publishing or relying on the program, replace this text with an
+                        accurate description of how the content was developed and reviewed.</p></section>
+                    <section className="info-card"><h2>Sources and attribution</h2><p>Add the actual sources used to
+                        create or verify the workouts and exercise instructions. Include the source title, author or
+                        organization, link, and any required attribution or license information.</p><p>If an exercise
+                        image is used, identify its creator and source, and confirm that you have permission to use it.
+                        Do not list a source unless it was actually used.</p></section>
+                    <section className="info-card"><h2>About the author</h2><p>This application was created by <strong>Natalia
+                        Lelekova</strong> as a personal project to organize ski-preparation workouts.</p><p>You can add
+                        a short biography, relevant experience, and a contact or profile link here.</p></section>
+                    <section className="info-note"><strong>Important</strong><p>Training needs vary. The sample material
+                        is general information and is not medical advice or a substitute for guidance from a qualified
+                        professional. Review all content, sources, image rights, and claims before making the app
+                        public.</p></section>
+                </section>
             </>}
             {program && !workout && <>
                 <button className="back-link" onClick={() => reset()}><ArrowLeft size={16}/> ALL PROGRAMS</button>

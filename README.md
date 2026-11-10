@@ -22,6 +22,8 @@ npm run test:e2e
 
 Tests cover program selection, workout navigation, expanding/collapsing exercise guidance, timer start/stop, completion persistence, and mobile timer placement. Playwright runs desktop Chromium and a Pixel 7 viewport.
 
+The home page links to an information page with editable sections for content provenance, source/image attribution, and author details. Update the text in the `showInfo` information-page section in `src/App.jsx` with accurate details before publishing. Do not claim sources, qualifications, or image permissions unless you have verified them.
+
 ## Add or change training content
 
 Edit `src/data/programs.js`; the app renders this data automatically. A program has an `id`, display name, summary and `workouts` array. Give each program and workout a unique ID. Each workout includes day, title, focus, description, duration, an `exercises` array and the shared `warmup` array. The 14 sample warm-up moves are defined once and automatically attached to every workout, so edit that shared list to change the warm-up everywhere. The three-day plan schedule is assembled at the bottom of the file: its strength, conditioning and power sessions are repeated in week two, with warm-up-only sessions on Tuesday, Thursday and Saturday.
