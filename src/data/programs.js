@@ -1,8 +1,8 @@
 // Edit this file to add or update programs, workouts and exercises.
 // Image values may be remote URLs or paths under public/.
+// Weekday labels are generated from workout order; do not add day fields to workouts.
 const strength1 = {
     id: 'six-a',
-    day: 'Monday',
     title: 'Strength 1',
     focus: 'Strength',
     description: 'This full-body session builds the leg and core strength you need to stay stable against the forces of skiing.\n' +
@@ -125,7 +125,6 @@ const strength1 = {
 
 const strength2 = {
     id: 'strength2',
-    day: 'Tuesday',
     title: 'Strength 2',
     focus: 'Strength',
     description: 'his session focuses on your glutes, hamstrings and core. You\'ll build ' +
@@ -163,6 +162,7 @@ const strength2 = {
 export const programs = [
     {
         id: 'six-day',
+        workoutsPerWeek: 6,
         name: '6 days / week',
         shortName: '6-day plan',
         duration: '6 weeks',
@@ -174,7 +174,6 @@ export const programs = [
             strength2,
             {
                 id: 'six-c',
-                day: 'Wednesday',
                 title: 'Balance & core',
                 focus: 'Control',
                 description: 'Practice balance and trunk control with smooth, deliberate repetitions.',
@@ -219,7 +218,6 @@ export const programs = [
             },
             {
                 id: 'six-d',
-                day: 'Thursday',
                 title: 'Recovery & mobility',
                 focus: 'Recovery',
                 description: 'An intentionally easy session to restore movement and prepare for the next training day.',
@@ -252,7 +250,6 @@ export const programs = [
             },
             {
                 id: 'six-e',
-                day: 'Friday',
                 title: 'Power & agility',
                 focus: 'Power',
                 description: 'Practice low-impact quickness and controlled landings. Stop if your form becomes sloppy.',
@@ -285,7 +282,6 @@ export const programs = [
             },
             {
                 id: 'six-f',
-                day: 'Saturday',
                 title: 'Full-body strength',
                 focus: 'Strength',
                 description: 'A moderate full-body session. Rest as needed and prioritize sound movement over speed.',
@@ -332,6 +328,7 @@ export const programs = [
     },
     {
         id: 'three-day',
+        workoutsPerWeek: 6,
         name: '3 days / week',
         shortName: '3-day plan',
         duration: '8 weeks',
@@ -341,7 +338,6 @@ export const programs = [
         workouts: [
             {
                 id: 'three-a',
-                day: 'Monday',
                 title: 'Strength & stability',
                 focus: 'Strength',
                 description: 'Build lower-body and trunk strength with controlled, comfortable movements.',
@@ -387,7 +383,6 @@ export const programs = [
             },
             {
                 id: 'three-b',
-                day: 'Wednesday',
                 title: 'Conditioning & mobility',
                 focus: 'Endurance',
                 description: 'Combine easy aerobic work with a short mobility sequence. Keep the session sustainable.',
@@ -420,7 +415,6 @@ export const programs = [
             },
             {
                 id: 'three-c',
-                day: 'Friday',
                 title: 'Power, balance & core',
                 focus: 'Control',
                 description: 'Finish the week with balance, lateral control and core work. Choose options that let you move well.',
@@ -674,9 +668,8 @@ for (const plan of programs) {
 
 const threeDay = programs.find(plan => plan.id === 'three-day');
 const weekOne = threeDay.workouts;
-const warmupOnly = (week, day) => ({
-    id: `three-${week}-${day.toLowerCase()}-warmup`,
-    day: `Week ${week} · ${day}`,
+const warmupOnly = (week, slot) => ({
+    id: `three-${week}-warmup-${slot}`,
     title: 'Warm-up',
     focus: 'Preparation',
     description: 'A short movement preparation session. Complete the shared warm-up at an easy, comfortable pace.',
@@ -688,10 +681,10 @@ const warmupOnly = (week, day) => ({
 threeDay.duration = '2 weeks';
 threeDay.weeks = '2 weeks · 3 training days + warm-up days';
 threeDay.workouts = [
-    {...weekOne[0], day: 'Week 1 · Monday'}, warmupOnly(1, 'Tuesday'),
-    {...weekOne[1], day: 'Week 1 · Wednesday'}, warmupOnly(1, 'Thursday'),
-    {...weekOne[2], day: 'Week 1 · Friday'}, warmupOnly(1, 'Saturday'),
-    {...weekOne[0], id: 'three-a-week-2', day: 'Week 2 · Monday'}, warmupOnly(2, 'Tuesday'),
-    {...weekOne[1], id: 'three-b-week-2', day: 'Week 2 · Wednesday'}, warmupOnly(2, 'Thursday'),
-    {...weekOne[2], id: 'three-c-week-2', day: 'Week 2 · Friday'}, warmupOnly(2, 'Saturday')
+    {...weekOne[0]}, warmupOnly(1, 1),
+    {...weekOne[1]}, warmupOnly(1, 2),
+    {...weekOne[2]}, warmupOnly(1, 3),
+    {...weekOne[0], id: 'three-a-week-2'}, warmupOnly(2, 1),
+    {...weekOne[1], id: 'three-b-week-2'}, warmupOnly(2, 2),
+    {...weekOne[2], id: 'three-c-week-2'}, warmupOnly(2, 3)
 ];

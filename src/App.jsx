@@ -14,6 +14,14 @@ import {
 import {programs} from './data/programs.js';
 
 const STORAGE_KEY = 'snowbound-training-v1', MAX_TIMER_MS = 2 * 60 * 60 * 1000;
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+function scheduleLabel(program, workoutIndex) {
+    const workoutsPerWeek = Math.min(program.workoutsPerWeek || WEEKDAYS.length, WEEKDAYS.length);
+    const week = Math.floor(workoutIndex / workoutsPerWeek) + 1;
+    const weekday = WEEKDAYS[workoutIndex % workoutsPerWeek];
+    return program.workouts.length > workoutsPerWeek ? `Week ${week} · ${weekday}` : weekday
+}
 
 function normalizeHistory(value) {
     if (Array.isArray(value)) return value.filter(ts => Number.isFinite(ts));
@@ -195,14 +203,14 @@ export default function App() {
                 <section className="workout-list">
                     <div className="list-heading">
                         <span>TRAINING SCHEDULE</span><span>{program.workouts.length} SESSIONS</span></div>
-                    {program.workouts.map(item => {
+                    {program.workouts.map((item, index) => {
                         const done = normalizeHistory(saved.completed[`${program.id}:${item.id}`]);
                         return <button className="workout-row" key={item.id} onClick={() => {
                             setSelectedWorkoutId(item.id);
                             setExpandedExercise(null);
                             setWarmupOpen(Boolean(item.warmupOnly));
                             setExercisesOpen(true)
-                        }}><span className="workout-day">{item.day}</span><span
+                        }}><span className="workout-day">{scheduleLabel(program, index)}</span><span
                             className="workout-title">{item.title}<small>{item.warmupOnly ? 'Warm-up only' : `${item.focus} · ${item.exercises.length} exercises`}</small></span><span
                             className="workout-duration"><Clock3 size={14}/>{item.duration}</span>{done.length > 0 &&
                             <span className="done-chip"><Check size={13}/>{localDate(done.at(-1))}</span>}<span
@@ -217,7 +225,7 @@ export default function App() {
             <div className="workout-layout">
                 <section className="workout-main">
                     <div className="workout-hero">
-                        <div className="eyebrow">{workout.day.toUpperCase()} · {workout.focus.toUpperCase()}</div>
+                        <div className="eyebrow">{workout.focus.toUpperCase()}</div>
                         <h1>{workout.title}<span className="title-period">.</span></h1>
                         <div className="workout-quick"><span><Clock3 size={15}/>{workout.duration}</span><span><Dumbbell
                             size={15}/>{workout.warmupOnly ? 'Warm-up only' : `${workout.warmup.length} warm-up + ${workout.exercises.length} exercises`}</span>
