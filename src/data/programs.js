@@ -696,156 +696,58 @@ const endurance = {
         }]
 };
 
+const rest = {
+    id: 'rest',
+    title: 'Rest/Easy Walk',
+    focus: 'Recovery',
+    description: 'Today is your rest day. You can go for a short walk or skip activities at all.',
+    exercises: [],
+    warmup: []
+};
+
 export const programs = [
     {
         id: 'six-day',
-        workoutsPerWeek: 6,
+        workoutsPerWeek: 7,
         name: '6 days / week',
         shortName: '6-day plan',
         duration: '6 weeks',
         level: 'Progressive',
-        summary: 'A balanced week of strength, conditioning, mobility and recovery work.',
+        summary: 'For anyone already comfortable training most days of the week. You\'ll ' +
+            'complete all six workouts each week, with the mobility and activation ' +
+            'warm-up at the start of every session \n' +
+            'You can move the sessions around to fit your week. Just don\'t put Strength 1, ' +
+            '2 and 3 on consecutive days.',
         weeks: '6 weeks · 45–60 min sessions',
         workouts: [
             strength1,
-            strength2,
-            strength3,
             powerConditioning1,
+            strength2,
+            rest,
+            strength3,
             powerConditioning2,
             endurance
         ]
     },
     {
         id: 'three-day',
-        workoutsPerWeek: 6,
+        workoutsPerWeek: 7,
         name: '3 days / week',
         shortName: '3-day plan',
-        duration: '8 weeks',
+        duration: '6 weeks',
         level: 'Balanced',
-        summary: 'Three focused sessions combine strength, conditioning and movement quality.',
-        weeks: '8 weeks · 45–60 min sessions',
+        summary: 'For anyone newer to training, returning after time off or unsure where to ' +
+            'start. You\'ll complete the six workouts over two weeks, then repeat that ' +
+            'cycle three times.',
+        weeks: '6 weeks · 45–60 min sessions',
         workouts: [
-            {
-                id: 'three-a',
-                title: 'Strength & stability',
-                focus: 'Strength',
-                description: 'Build lower-body and trunk strength with controlled, comfortable movements.',
-                duration: '50 min',
-                exercises: [
-                    {
-                        id: 'goblet-squat-3',
-                        name: 'Goblet squat',
-                        sets: '3',
-                        reps: '10',
-                        measure: 'reps',
-                        image: 'https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=900&q=80',
-                        instructions: 'Hold one weight close to your chest. Sit between your hips, keeping your whole foot grounded, then stand tall.',
-                        watch: 'Keep knees tracking in line with your toes; avoid rounding your back at the bottom.',
-                        easier: 'Use a lighter weight or squat to a chair.',
-                        harder: 'Use a heavier weight or pause for two seconds at the bottom.',
-                        snow: 'Stronger legs help you maintain a stable stance and absorb terrain changes.'
-                    },
-                    {
-                        id: 'reverse-lunge-3',
-                        name: 'Reverse lunge',
-                        sets: '3',
-                        reps: '8',
-                        measure: 'reps/leg',
-                        instructions: 'Stand tall, step one foot back and lower both knees comfortably. Push through your front foot to return.',
-                        watch: 'Keep your front heel down and hips facing forward.',
-                        easier: 'Hold a wall for balance and shorten your range.',
-                        harder: 'Hold dumbbells at your sides.',
-                        snow: 'Single-leg strength supports balance and control during linked turns.'
-                    },
-                    {
-                        id: 'dead-bug-3',
-                        name: 'Dead bug',
-                        sets: '3',
-                        reps: '8',
-                        measure: 'reps/side',
-                        instructions: 'Lie on your back with arms up and knees bent. Slowly lower the opposite arm and leg, then return.',
-                        watch: 'Keep your lower back gently supported against the floor.',
-                        easier: 'Move only one limb at a time.',
-                        harder: 'Straighten the moving leg further.',
-                        snow: 'A steady trunk helps transfer movement between your upper and lower body.'
-                    }]
-            },
-            {
-                id: 'three-b',
-                title: 'Conditioning & mobility',
-                focus: 'Endurance',
-                description: 'Combine easy aerobic work with a short mobility sequence. Keep the session sustainable.',
-                duration: '45 min',
-                exercises: [
-                    {
-                        id: 'bike-3',
-                        name: 'Bike or brisk uphill walk',
-                        sets: '1',
-                        reps: '30',
-                        measure: 'min',
-                        instructions: 'Choose a low-impact cardio option and maintain a pace where you can speak in short sentences.',
-                        watch: 'Start gently and avoid turning this into an all-out effort.',
-                        easier: 'Try 20 minutes at an easy pace.',
-                        harder: 'Extend to 40 minutes while keeping the same effort.',
-                        snow: 'A stronger aerobic base can help you enjoy more time on the mountain.'
-                    },
-                    {
-                        id: 'mobility-3',
-                        name: 'Hip and ankle mobility flow',
-                        sets: '2',
-                        reps: '5',
-                        measure: 'reps/side',
-                        instructions: 'Move slowly through comfortable hip and ankle ranges, pausing briefly where you feel stiffness.',
-                        watch: 'Stay below sharp pain; mobility should feel controlled.',
-                        easier: 'Reduce the range of each movement.',
-                        harder: 'Add one slow breath at each end position.',
-                        snow: 'Comfortable mobility can make it easier to adjust your stance and absorb movement.'
-                    }]
-            },
-            {
-                id: 'three-c',
-                title: 'Power, balance & core',
-                focus: 'Control',
-                description: 'Finish the week with balance, lateral control and core work. Choose options that let you move well.',
-                duration: '45 min',
-                exercises: [
-                    {
-                        id: 'single-leg-3',
-                        name: 'Single-leg balance',
-                        sets: '3',
-                        reps: '30',
-                        measure: 'sec/side',
-                        instructions: 'Stand on one foot with a soft knee. Keep your gaze steady and breathe naturally.',
-                        watch: 'Keep your pelvis level; use support if needed.',
-                        easier: 'Keep fingertips on a wall.',
-                        harder: 'Reach the free leg gently in different directions.',
-                        snow: 'Balance practice helps you make small adjustments on uneven terrain.'
-                    },
-                    {
-                        id: 'lateral-step-3',
-                        name: 'Lateral step and stick',
-                        sets: '3',
-                        reps: '6',
-                        measure: 'reps/side',
-                        instructions: 'Step sideways with purpose, land softly on one foot and hold your balance for two seconds.',
-                        watch: 'Land quietly with knee aligned over the foot.',
-                        easier: 'Take a smaller step and use support.',
-                        harder: 'Increase distance only while landing stays quiet and controlled.',
-                        snow: 'Lateral control helps with changing direction and stabilizing your stance.'
-                    },
-                    {
-                        id: 'side-plank-3',
-                        name: 'Side plank',
-                        sets: '3',
-                        reps: '20',
-                        measure: 'sec/side',
-                        instructions: 'Support yourself on your forearm and side of your foot or knee. Lift hips and hold a straight line.',
-                        watch: 'Keep shoulder away from your ear and hips lifted.',
-                        easier: 'Bend your knees and support yourself from them.',
-                        harder: 'Hold longer or lift the top leg slightly.',
-                        snow: 'Side-body endurance supports a controlled, centered stance.'
-                    }]
-            }
+            strength1,
+            powerConditioning1,
+            strength2,
+            rest,
+            powerConditioning2,
+            strength3,
+            endurance
         ]
     }
 ];
