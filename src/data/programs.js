@@ -544,6 +544,158 @@ const powerConditioning2 = {
         }]
 };
 
+const endurance = {
+    id: 'endurance',
+    title: 'Endurance',
+    focus: 'Agility drills + Zone 2 endurance',
+    description: 'This session starts with agility drills to improve how quickly and precisely ' +
+        'you move your feet. You\'ll then complete 30-45 minutes at a steady pace, ' +
+        'building the endurance to keep skiing well as the hours and days stack up.\n' +
+        'Complete the mobility and activation warm-up first.',
+    duration: '50 min',
+    exercises: [
+        {
+            id: 'end-01-01-forward-hops-both-feet',
+            name: 'Forward hops on both feet',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the forward two-foot hopping pattern shown in the plan. Work both sides where relevant.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-02-forward-hops-one-foot',
+            name: 'Forward hops on one foot',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the forward single-foot hopping pattern shown in the plan. Practise both legs.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-03-forward-step-through',
+            name: 'Forward step-through',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the forward step-through pattern, changing which foot leads.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-04-lateral-step-through',
+            name: 'Lateral step-through',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the lateral step-through pattern in both directions.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-05-lateral-hops-both-feet',
+            name: 'Lateral hops on both feet',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the lateral two-foot hopping pattern shown in the plan.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-06-lateral-hops-one-foot',
+            name: 'Lateral hops on one foot',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the lateral single-foot hopping pattern shown in the plan. Practise both legs.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-07-lateral-carioca',
+            name: 'Lateral carioca',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the lateral carioca pattern shown in the plan in both directions.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-08-lateral-in-in-out-out',
+            name: 'Lateral in-in-out-out',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the lateral in-in-out-out foot pattern shown in the plan.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-01-09-forward-in-in-out',
+            name: 'Forward in-in-out',
+            sets: '1',
+            reps: '',
+            measure: '',
+            image: '',
+            focus: 'Agility ladder',
+            instructions: 'Follow the forward in-in-out foot pattern shown in the plan.',
+            watch: 'Learn the pattern accurately before adding speed.',
+            easier: '',
+            harder: '',
+            snow: 'Develops agility and coordination for precise edge and pressure movements, helping your feet respond quickly when the terrain changes.'
+        },
+        {
+            id: 'end-02-zone-2',
+            name: 'Zone 2',
+            sets: '1',
+            reps: '30-45',
+            measure: 'min',
+            image: '',
+            focus: 'Steady pace',
+            instructions: 'Choose a continuous activity such as jogging, cycling, brisk or uphill walking, swimming, elliptical, or stair-stepper. Maintain the effort for 30-45 minutes.',
+            watch: 'Breathe harder than usual but remain able to hold a conversation; slow down if you can only say a few words.',
+            easier: '',
+            harder: '',
+            snow: 'Builds aerobic endurance for recovering between ski days and maintaining technique as the trip continues.'
+        }]
+};
+
 export const programs = [
     {
         id: 'six-day',
@@ -560,50 +712,7 @@ export const programs = [
             strength3,
             powerConditioning1,
             powerConditioning2,
-            {
-                id: 'six-f',
-                title: 'Full-body strength',
-                focus: 'Strength',
-                description: 'A moderate full-body session. Rest as needed and prioritize sound movement over speed.',
-                duration: '50 min',
-                exercises: [
-                    {
-                        id: 'hip-hinge',
-                        name: 'Hip hinge',
-                        sets: '3',
-                        reps: '10',
-                        measure: 'reps',
-                        instructions: 'Stand tall, soften your knees and push hips back while keeping your spine long. Stand by bringing hips forward.',
-                        watch: 'Keep the movement in your hips and avoid rounding your back.',
-                        easier: 'Practice with hands sliding down your thighs and no weight.',
-                        harder: 'Hold a light weight close to your body.',
-                        snow: 'Hip strength supports an athletic stance and controlled movement.'
-                    },
-                    {
-                        id: 'push-up',
-                        name: 'Incline push-up',
-                        sets: '3',
-                        reps: '8–12',
-                        measure: 'reps',
-                        instructions: 'Place hands on a stable elevated surface. Lower your chest toward it, then press away.',
-                        watch: 'Keep your body in one line and elbows at a comfortable angle.',
-                        easier: 'Use a higher surface or wall.',
-                        harder: 'Choose a lower surface.',
-                        snow: 'Upper-body strength contributes to overall resilience and getting up after a fall.'
-                    },
-                    {
-                        id: 'bird-dog',
-                        name: 'Bird dog',
-                        sets: '3',
-                        reps: '8',
-                        measure: 'reps/side',
-                        instructions: 'On hands and knees, reach opposite arm and leg long, pause, and return with control.',
-                        watch: 'Avoid rotating or arching your lower back.',
-                        easier: 'Move just one arm or leg at a time.',
-                        harder: 'Hold the reach for five seconds.',
-                        snow: 'Trunk control helps keep your movement coordinated as your legs work.'
-                    }]
-            }
+            endurance
         ]
     },
     {
