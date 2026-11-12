@@ -373,6 +373,89 @@ const strength3 = {
         }]
 };
 
+const powerConditioning1 = {
+    id: 'power-conditioning-1',
+    title: 'Power Conditioning 1',
+    focus: '4 plyometric exercises + sprint intervals',
+    description: 'The first half of this session builds your ability to produce and absorb force ' +
+        'quickly, using jumps that challenge your power, balance and control. The ' +
+        'second trains you to repeat hard efforts and recover quickly enough to go again.\n' +
+        'Complete the full mobility and activation warm-up before you start. With ' +
+        'every jump, the quality of the landing matters more than the height or distance',
+    duration: '45 min',
+    exercises: [
+        {
+            id: 'pc1-01-depth-drop-vertical-jump',
+            name: 'Depth drop to vertical jump',
+            sets: '6',
+            reps: '3',
+            measure: 'reps',
+            image: '',
+            focus: 'Bodyweight',
+            instructions: 'Step off a low, stable box and land softly on both feet. Move straight into a vertical jump and land under control.',
+            watch: 'Keep your knees aligned and land quietly. Stop and reset if you lose control.',
+            easier: 'Use a lower step or practise the landing without the jump.',
+            harder: '',
+            snow: 'Trains force absorption followed by a quick response for transitions, bumps, and variable snow.'
+        },
+        {
+            id: 'pc1-02-single-leg-broad-jumps',
+            name: 'Single-leg broad jumps',
+            sets: '6',
+            reps: '3',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Bodyweight',
+            instructions: 'Jump forward from one leg and land on the same leg. Hold the landing, reset, and complete the reps before switching.',
+            watch: 'Prioritize a controlled landing over distance.',
+            easier: '',
+            harder: '',
+            snow: 'Builds power, balance, and control for managing force on one ski at a time.'
+        },
+        {
+            id: 'pc1-03-box-jumps',
+            name: 'Box jumps',
+            sets: '6',
+            reps: '4',
+            measure: 'reps',
+            image: '',
+            focus: 'Record box height',
+            instructions: 'Jump from a standing position onto a stable box, land softly on both feet, stand tall, and step down between repetitions.',
+            watch: 'Choose a height that allows a controlled landing without knees collapsing or feet catching the edge.',
+            easier: 'Use a lower box or practise vertical jumps from the floor.',
+            harder: '',
+            snow: 'Builds explosive leg power for quick transitions and reacting to changes in terrain.'
+        },
+        {
+            id: 'pc1-04-lateral-single-leg-hops',
+            name: 'Lateral single-leg hops',
+            sets: '6',
+            reps: '20',
+            measure: 'sec/side',
+            image: '',
+            focus: 'Bodyweight',
+            instructions: 'On one leg, make small side-to-side hops and land on the same leg each time.',
+            watch: 'Keep the knee aligned and reduce the hop size if balance or landing control slips.',
+            easier: 'Use both feet or make the hops shorter.',
+            harder: '',
+            snow: 'Builds lateral power and balance for controlled edge-to-edge movements.'
+        },
+        {
+            id: 'pc1-05-sprint-intervals',
+            name: 'Sprint intervals',
+            sets: '10',
+            reps: '40 hard / 20 recovery',
+            measure: 'sec',
+            image: '',
+            focus: 'Hard but repeatable effort',
+            instructions: 'Jog for 5 minutes, then alternate 40 seconds of hard running and 20 seconds of recovery ten times. Jog for 5 minutes to cool down.',
+            watch: 'Choose a pace you can repeat across all intervals; keep the final interval controlled.',
+            easier: 'Use a stationary bike or rowing machine with the same work and recovery timing.',
+            harder: '',
+            snow: ''
+        }]
+};
+
 export const programs = [
     {
         id: 'six-day',
@@ -387,38 +470,7 @@ export const programs = [
             strength1,
             strength2,
             strength3,
-            {
-                id: 'six-d',
-                title: 'Recovery & mobility',
-                focus: 'Recovery',
-                description: 'An intentionally easy session to restore movement and prepare for the next training day.',
-                duration: '25 min',
-                exercises: [
-                    {
-                        id: 'worlds-greatest',
-                        name: 'Dynamic hip mobility',
-                        sets: '2',
-                        reps: '5',
-                        measure: 'reps/side',
-                        instructions: 'Use a comfortable lunge position and move gently through hip, hamstring and upper-back ranges.',
-                        watch: 'Keep every movement smooth and pain-free.',
-                        easier: 'Use a shallower lunge.',
-                        harder: 'Add a short pause at each position.',
-                        snow: 'Maintaining comfortable movement helps you get into an athletic ski stance.'
-                    },
-                    {
-                        id: 'breathing',
-                        name: 'Easy breathing reset',
-                        sets: '1',
-                        reps: '5',
-                        measure: 'min',
-                        instructions: 'Sit or lie comfortably. Breathe slowly through your nose, allowing the exhale to be relaxed.',
-                        watch: 'Keep the breath easy; do not force it.',
-                        easier: 'Breathe normally and simply notice the rhythm.',
-                        harder: 'Make the exhale slightly longer than the inhale.',
-                        snow: 'Recovery habits help you arrive at training and skiing feeling more refreshed.'
-                    }]
-            },
+            powerConditioning1,
             {
                 id: 'six-e',
                 title: 'Power & agility',
