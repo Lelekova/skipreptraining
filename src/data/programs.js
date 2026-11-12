@@ -1,5 +1,165 @@
 // Edit this file to add or update programs, workouts and exercises.
 // Image values may be remote URLs or paths under public/.
+const strength1 = {
+    id: 'six-a',
+    day: 'Monday',
+    title: 'Strength 1',
+    focus: 'Strength',
+    description: 'This full-body session builds the leg and core strength you need to stay stable against the forces of skiing.\n' +
+        'Complete the warm-up first. Choose weights that make the final few reps challenging without losing your form.',
+    duration: '50 min',
+    exercises: [
+        {
+            id: 's1-01-goblet-squat',
+            name: 'Goblet squat',
+            sets: '4',
+            reps: '6',
+            measure: 'reps',
+            image: '',
+            focus: 'Challenging load with clean form',
+            instructions: 'Hold a dumbbell or kettlebell at chest height. Squat while keeping your feet grounded and knees aligned, then stand through your whole foot.',
+            watch: 'Do not let your knees collapse inward. Reduce the weight or range if needed.',
+            easier: 'Squat to a box or bench.',
+            harder: 'Take three seconds to lower.',
+            snow: 'Builds leg strength for holding position as the ski loads and bends.'
+        },
+        {
+            id: 's1-02-kettlebell-suitcase-carry',
+            name: 'Kettlebell suitcase carry',
+            sets: '4',
+            reps: '1 length',
+            measure: 'length/side',
+            image: '',
+            focus: 'Heavy load',
+            instructions: 'Hold a heavy kettlebell, dumbbell, or plate in one hand and walk slowly with your torso upright, shoulders level, and ribs down.',
+            watch: 'Do not lean away from the weight. Use a lighter load if you cannot stay upright.',
+            easier: '',
+            harder: '',
+            snow: 'Builds core strength to help keep your upper body balanced over the outside ski.'
+        },
+        {
+            id: 's1-03-kettlebell-lateral-lunge',
+            name: 'Kettlebell lateral lunge',
+            sets: '3',
+            reps: '8',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Kettlebell at chest',
+            instructions: 'Hold a kettlebell at your chest, step wide, and sit into the stepping hip while keeping the other leg long. Push back to standing and switch sides.',
+            watch: 'Keep the working knee tracking in line with your toes.',
+            easier: '',
+            harder: '',
+            snow: 'Builds lateral strength to support balance over the outside ski and edge control.'
+        },
+        {
+            id: 's1-04-single-arm-row',
+            name: 'Kettlebell single-arm row',
+            sets: '3',
+            reps: '8',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Heavy load',
+            instructions: 'Hinge forward and support one hand on a bench or your knee. Pull the kettlebell toward your ribs with your elbow close, then lower slowly.',
+            watch: 'Avoid twisting; keep your shoulders and hips facing the floor.',
+            easier: '',
+            harder: '',
+            snow: 'Builds upper-back and core strength for stable posture and pole planting.'
+        },
+        {
+            id: 's1-05-dumbbell-step-up',
+            name: 'Dumbbell step-up',
+            sets: '4',
+            reps: '6',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Moderate to heavy',
+            instructions: 'Hold dumbbells and place one foot on a stable box or bench. Push through that foot to step up, then lower slowly. Finish the reps before switching sides.',
+            watch: 'Avoid pushing off with the trailing foot. Use a lower step or lighter weights if needed.',
+            easier: '',
+            harder: '',
+            snow: 'Builds independent strength in each leg for balance and control over the outside ski.'
+        },
+        {
+            id: 's1-06-single-arm-overhead-press',
+            name: 'Single-arm dumbbell overhead press',
+            sets: '4',
+            reps: '8',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Moderate load',
+            instructions: 'Stand tall with a dumbbell at one shoulder. Keep your ribs down as you press overhead, then lower slowly and switch sides after the set.',
+            watch: 'Do not lean back or arch your lower back. Use a lighter weight if needed.',
+            easier: '',
+            harder: '',
+            snow: 'Builds shoulder and core strength under an uneven load for a stable upper body and pole position.'
+        },
+        {
+            id: 's1-07-hollow-body-hold',
+            name: 'Hollow body hold',
+            sets: '8',
+            reps: '20 on / 10 off',
+            measure: 'sec',
+            image: '',
+            focus: 'Bodyweight',
+            instructions: 'Lie on your back, press your lower back into the floor, lift your arms and legs, and hold while breathing normally.',
+            watch: 'Keep your lower back on the floor; bring your limbs closer if it lifts.',
+            easier: 'Bend your knees and keep your arms across your chest.',
+            harder: '',
+            snow: 'Builds core endurance to connect your upper and lower body while your legs work.'
+        },
+        {
+            id: 's1-08-half-kneeling-landmine-press',
+            name: 'Half-kneeling landmine press',
+            sets: '3',
+            reps: '10',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Moderate load',
+            instructions: 'Start half-kneeling with the end of a barbell at one shoulder. Press it forward and up until your arm is straight, then lower and switch sides after the reps.',
+            watch: 'Resist rotation; keep your shoulders and hips facing forward.',
+            easier: '',
+            harder: '',
+            snow: 'Builds shoulder and core strength to resist unwanted rotation and maintain upper-body stability.'
+        }]
+};
+
+const strength2 = {
+    id: 'strength2',
+    day: 'Tuesday',
+    title: 'Strength 2',
+    focus: 'Strength',
+    description: 'his session focuses on your glutes, hamstrings and core. You\'ll build ' +
+        'strength on one leg at a time, while training your upper body to stay stable ' +
+        'rather than being pulled or twisted out of position.\n' +
+        'Complete the warm-up first. Choose weights that challenge you without ' +
+        'losing control of the movement.',
+    duration: '50 min',
+    exercises: [
+        {
+            id: 'bike',
+            name: 'Bike or brisk uphill walk',
+            sets: '1',
+            reps: '30',
+            measure: 'min',
+            instructions: 'Choose a low-impact cardio option and maintain a pace where you can speak in short sentences.',
+            watch: 'Start gently and avoid turning this into an all-out effort.',
+            easier: 'Try 20 minutes at an easy pace.',
+            harder: 'Extend to 40 minutes while keeping the same effort.',
+            snow: 'A stronger aerobic base can help you enjoy more time on the mountain.'
+        },
+        {
+            id: 'mobility-flow',
+            name: 'Hip and ankle mobility flow',
+            sets: '2',
+            reps: '5',
+            measure: 'reps/side',
+            instructions: 'Move slowly through comfortable hip and ankle ranges, pausing briefly where you feel stiffness.',
+            watch: 'Stay below sharp pain; mobility should feel controlled.',
+            easier: 'Reduce the range of each movement.',
+            harder: 'Add one slow breath at each end position.',
+            snow: 'Comfortable mobility can make it easier to adjust your stance and absorb movement.'
+        }]
+};
 export const programs = [
     {
         id: 'six-day',
@@ -10,161 +170,8 @@ export const programs = [
         summary: 'A balanced week of strength, conditioning, mobility and recovery work.',
         weeks: '6 weeks · 45–60 min sessions',
         workouts: [
-            {
-                id: 'six-a',
-                day: 'Monday',
-                title: 'Strength 1',
-                focus: 'Strength',
-                description: 'This full-body session builds the leg and core strength you need to stay stable against the forces of skiing.\n' +
-                    'Complete the warm-up first. Choose weights that make the final few reps challenging without losing your form.',
-                duration: '50 min',
-                exercises: [
-                    {
-                        id: 's1-01-goblet-squat',
-                        name: 'Goblet squat',
-                        sets: '4',
-                        reps: '6',
-                        measure: 'reps',
-                        image: '',
-                        focus: 'Challenging load with clean form',
-                        instructions: 'Hold a dumbbell or kettlebell at chest height. Squat while keeping your feet grounded and knees aligned, then stand through your whole foot.',
-                        watch: 'Do not let your knees collapse inward. Reduce the weight or range if needed.',
-                        easier: 'Squat to a box or bench.',
-                        harder: 'Take three seconds to lower.',
-                        snow: 'Builds leg strength for holding position as the ski loads and bends.'
-                    },
-                    {
-                        id: 's1-02-kettlebell-suitcase-carry',
-                        name: 'Kettlebell suitcase carry',
-                        sets: '4',
-                        reps: '1 length',
-                        measure: 'length/side',
-                        image: '',
-                        focus: 'Heavy load',
-                        instructions: 'Hold a heavy kettlebell, dumbbell, or plate in one hand and walk slowly with your torso upright, shoulders level, and ribs down.',
-                        watch: 'Do not lean away from the weight. Use a lighter load if you cannot stay upright.',
-                        easier: '',
-                        harder: '',
-                        snow: 'Builds core strength to help keep your upper body balanced over the outside ski.'
-                    },
-                    {
-                        id: 's1-03-kettlebell-lateral-lunge',
-                        name: 'Kettlebell lateral lunge',
-                        sets: '3',
-                        reps: '8',
-                        measure: 'reps/side',
-                        image: '',
-                        focus: 'Kettlebell at chest',
-                        instructions: 'Hold a kettlebell at your chest, step wide, and sit into the stepping hip while keeping the other leg long. Push back to standing and switch sides.',
-                        watch: 'Keep the working knee tracking in line with your toes.',
-                        easier: '',
-                        harder: '',
-                        snow: 'Builds lateral strength to support balance over the outside ski and edge control.'
-                    },
-                    {
-                        id: 's1-04-single-arm-row',
-                        name: 'Kettlebell single-arm row',
-                        sets: '3',
-                        reps: '8',
-                        measure: 'reps/side',
-                        image: '',
-                        focus: 'Heavy load',
-                        instructions: 'Hinge forward and support one hand on a bench or your knee. Pull the kettlebell toward your ribs with your elbow close, then lower slowly.',
-                        watch: 'Avoid twisting; keep your shoulders and hips facing the floor.',
-                        easier: '',
-                        harder: '',
-                        snow: 'Builds upper-back and core strength for stable posture and pole planting.'
-                    },
-                    {
-                        id: 's1-05-dumbbell-step-up',
-                        name: 'Dumbbell step-up',
-                        sets: '4',
-                        reps: '6',
-                        measure: 'reps/side',
-                        image: '',
-                        focus: 'Moderate to heavy',
-                        instructions: 'Hold dumbbells and place one foot on a stable box or bench. Push through that foot to step up, then lower slowly. Finish the reps before switching sides.',
-                        watch: 'Avoid pushing off with the trailing foot. Use a lower step or lighter weights if needed.',
-                        easier: '',
-                        harder: '',
-                        snow: 'Builds independent strength in each leg for balance and control over the outside ski.'
-                    },
-                    {
-                        id: 's1-06-single-arm-overhead-press',
-                        name: 'Single-arm dumbbell overhead press',
-                        sets: '4',
-                        reps: '8',
-                        measure: 'reps/side',
-                        image: '',
-                        focus: 'Moderate load',
-                        instructions: 'Stand tall with a dumbbell at one shoulder. Keep your ribs down as you press overhead, then lower slowly and switch sides after the set.',
-                        watch: 'Do not lean back or arch your lower back. Use a lighter weight if needed.',
-                        easier: '',
-                        harder: '',
-                        snow: 'Builds shoulder and core strength under an uneven load for a stable upper body and pole position.'
-                    },
-                    {
-                        id: 's1-07-hollow-body-hold',
-                        name: 'Hollow body hold',
-                        sets: '8',
-                        reps: '20 on / 10 off',
-                        measure: 'sec',
-                        image: '',
-                        focus: 'Bodyweight',
-                        instructions: 'Lie on your back, press your lower back into the floor, lift your arms and legs, and hold while breathing normally.',
-                        watch: 'Keep your lower back on the floor; bring your limbs closer if it lifts.',
-                        easier: 'Bend your knees and keep your arms across your chest.',
-                        harder: '',
-                        snow: 'Builds core endurance to connect your upper and lower body while your legs work.'
-                    },
-                    {
-                        id: 's1-08-half-kneeling-landmine-press',
-                        name: 'Half-kneeling landmine press',
-                        sets: '3',
-                        reps: '10',
-                        measure: 'reps/side',
-                        image: '',
-                        focus: 'Moderate load',
-                        instructions: 'Start half-kneeling with the end of a barbell at one shoulder. Press it forward and up until your arm is straight, then lower and switch sides after the reps.',
-                        watch: 'Resist rotation; keep your shoulders and hips facing forward.',
-                        easier: '',
-                        harder: '',
-                        snow: 'Builds shoulder and core strength to resist unwanted rotation and maintain upper-body stability.'
-                    }]
-            },
-            {
-                id: 'six-b',
-                day: 'Tuesday',
-                title: 'Aerobic conditioning',
-                focus: 'Endurance',
-                description: 'Build a comfortable aerobic base. Keep the effort conversational and finish feeling like you could continue.',
-                duration: '40 min',
-                exercises: [
-                    {
-                        id: 'bike',
-                        name: 'Bike or brisk uphill walk',
-                        sets: '1',
-                        reps: '30',
-                        measure: 'min',
-                        instructions: 'Choose a low-impact cardio option and maintain a pace where you can speak in short sentences.',
-                        watch: 'Start gently and avoid turning this into an all-out effort.',
-                        easier: 'Try 20 minutes at an easy pace.',
-                        harder: 'Extend to 40 minutes while keeping the same effort.',
-                        snow: 'A stronger aerobic base can help you enjoy more time on the mountain.'
-                    },
-                    {
-                        id: 'mobility-flow',
-                        name: 'Hip and ankle mobility flow',
-                        sets: '2',
-                        reps: '5',
-                        measure: 'reps/side',
-                        instructions: 'Move slowly through comfortable hip and ankle ranges, pausing briefly where you feel stiffness.',
-                        watch: 'Stay below sharp pain; mobility should feel controlled.',
-                        easier: 'Reduce the range of each movement.',
-                        harder: 'Add one slow breath at each end position.',
-                        snow: 'Comfortable mobility can make it easier to adjust your stance and absorb movement.'
-                    }]
-            },
+            strength1,
+            strength2,
             {
                 id: 'six-c',
                 day: 'Wednesday',
