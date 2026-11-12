@@ -2,7 +2,7 @@
 // Image values may be remote URLs or paths under public/.
 // Weekday labels are generated from workout order; do not add day fields to workouts.
 const strength1 = {
-    id: 'six-a',
+    id: 'strength-1',
     title: 'Strength 1',
     focus: 'Strength',
     description: 'This full-body session builds the leg and core strength you need to stay stable against the forces of skiing.\n' +
@@ -124,10 +124,10 @@ const strength1 = {
 };
 
 const strength2 = {
-    id: 'strength2',
+    id: 'strength-2',
     title: 'Strength 2',
     focus: 'Strength',
-    description: 'his session focuses on your glutes, hamstrings and core. You\'ll build ' +
+    description: 'This session focuses on your glutes, hamstrings and core. You\'ll build ' +
         'strength on one leg at a time, while training your upper body to stay stable ' +
         'rather than being pulled or twisted out of position.\n' +
         'Complete the warm-up first. Choose weights that challenge you without ' +
@@ -247,6 +247,132 @@ const strength2 = {
             snow: 'Builds inner-thigh, hip, and core strength for angulation and edge control.'
         }]
 };
+
+const strength3 = {
+    id: 'strength-3',
+    title: 'Strength 3',
+    focus: 'Strength',
+    description: 'The final strength session brings together single-leg strength, knee and\n' +
+        'ankle control, and upper-body stability. It\'s designed to help you stay\n' +
+        'balanced and maintain your position as the forces and conditions change beneath you.\n' +
+        'Complete the warm-up first. Choose weights that challenge you without\n' +
+        'losing control of the movement.',
+    duration: '50 min',
+    exercises: [
+        {
+            id: 's3-01-back-rack-reverse-lunge',
+            name: 'Back-rack reverse lunge',
+            sets: '4',
+            reps: '6',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Barbell or heavy dumbbells',
+            instructions: 'Hold a barbell across your shoulders or dumbbells at your sides. Step one foot back and lower the rear knee, then push through the front foot to stand.',
+            watch: 'Use a long enough step to lower with control. Keep your front foot flat and knee aligned.',
+            easier: '',
+            harder: '',
+            snow: 'Builds independent leg strength for pressure management and balance over the outside ski.'
+        },
+        {
+            id: 's3-02-kettlebell-overhead-waiters-carry',
+            name: "Kettlebell overhead waiter's carry",
+            sets: '4',
+            reps: '1 length',
+            measure: 'length/side',
+            image: '',
+            focus: 'Moderate kettlebell',
+            instructions: 'Press a kettlebell overhead and walk slowly for one length with your wrist neutral and ribs down. Lower the weight and switch sides.',
+            watch: 'Avoid folding your wrist or leaning. Use a lighter kettlebell if needed.',
+            easier: '',
+            harder: '',
+            snow: 'Builds shoulder and core stability under an uneven load for a stable upper body and pole position.'
+        },
+        {
+            id: 's3-03-barbell-rdl',
+            name: 'Barbell RDL',
+            sets: '4',
+            reps: '8',
+            measure: 'reps',
+            image: '',
+            focus: 'Heavy',
+            instructions: 'Hold the bar in front of your thighs with knees slightly bent. Push your hips back as the bar travels down your legs, then drive your hips forward to stand.',
+            watch: 'Treat it as a hip hinge, not a squat; keep the knee bend slight.',
+            easier: '',
+            harder: '',
+            snow: 'Builds hamstring and glute strength for controlling pressure and bringing your feet back under you between turns.'
+        },
+        {
+            id: 's3-04-dumbbell-lateral-raise',
+            name: 'Dumbbell lateral raise',
+            sets: '4',
+            reps: '8',
+            measure: 'reps',
+            image: '',
+            focus: 'Light to moderate',
+            instructions: 'Stand tall with dumbbells and a slight bend in your elbows. Raise your arms out to shoulder height, then lower slowly.',
+            watch: 'Avoid swinging the weights or shrugging. Use lighter dumbbells if needed.',
+            easier: '',
+            harder: '',
+            snow: 'Builds shoulder strength for a stable upper-body position and fluid pole plants.'
+        },
+        {
+            id: 's3-05-poliquin-step-down',
+            name: 'Poliquin step-down (kettlebells at sides)',
+            sets: '3',
+            reps: '8',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Kettlebells at sides',
+            instructions: 'Stand on a low, stable step on one foot while holding kettlebells. Bend that knee to lower the opposite heel to the floor, tap lightly, then stand.',
+            watch: 'Lower with control and keep the working knee aligned.',
+            easier: 'Use a lower step or do the movement without weights.',
+            harder: '',
+            snow: 'Builds quadriceps strength and knee control for absorbing force as terrain changes.'
+        },
+        {
+            id: 's3-06-calf-raises',
+            name: 'Calf raises (kettlebells at sides)',
+            sets: '3',
+            reps: '10',
+            measure: 'reps',
+            image: '',
+            focus: 'Kettlebells at sides',
+            instructions: 'Stand tall holding kettlebells. Rise onto the balls of your feet, pause, and lower slowly. On a step, let your heels drop below your toes.',
+            watch: 'Avoid bouncing or letting your ankles roll outward. Keep the movement controlled.',
+            easier: '',
+            harder: '',
+            snow: 'Builds ankle and calf strength for precise balance adjustments along the ski.'
+        },
+        {
+            id: 's3-07-landmine-curtsy-lunge',
+            name: 'Landmine curtsy lunge',
+            sets: '3',
+            reps: '6-10',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Bar at chest',
+            instructions: 'Hold the end of the landmine bar at your chest. Step one foot behind and across the other, lower into a lunge, then push through the front foot to stand and switch sides.',
+            watch: 'Keep the front knee aligned with your toes. Make the step smaller if needed.',
+            easier: '',
+            harder: '',
+            snow: 'Builds hip strength and mobility through a side-to-side range that supports angulation.'
+        },
+        {
+            id: 's3-08-push-ups',
+            name: 'Push-ups',
+            sets: '3',
+            reps: '10',
+            measure: 'reps',
+            image: '',
+            focus: 'Bodyweight',
+            instructions: 'Start in a high plank with hands slightly wider than shoulders. Lower your chest with elbows angled back, then press up while keeping your body aligned.',
+            watch: 'Keep your hips from sagging and avoid flaring your elbows. Use a comfortable range.',
+            easier: 'Put your hands on a bench or do the movement from your knees.',
+            harder: '',
+            snow: 'Builds upper-body and core strength for maintaining a stable skiing posture.'
+        }]
+};
+
 export const programs = [
     {
         id: 'six-day',
@@ -260,50 +386,7 @@ export const programs = [
         workouts: [
             strength1,
             strength2,
-            {
-                id: 'six-c',
-                title: 'Balance & core',
-                focus: 'Control',
-                description: 'Practice balance and trunk control with smooth, deliberate repetitions.',
-                duration: '45 min',
-                exercises: [
-                    {
-                        id: 'single-leg-balance',
-                        name: 'Single-leg balance',
-                        sets: '3',
-                        reps: '30',
-                        measure: 'sec/side',
-                        instructions: 'Stand on one foot with a soft knee. Keep your gaze steady and breathe naturally.',
-                        watch: 'Keep your pelvis level; use support if needed.',
-                        easier: 'Keep fingertips on a wall.',
-                        harder: 'Reach the free leg gently in different directions.',
-                        snow: 'Balance practice helps you make small adjustments on uneven terrain.'
-                    },
-                    {
-                        id: 'dead-bug',
-                        name: 'Dead bug',
-                        sets: '3',
-                        reps: '8',
-                        measure: 'reps/side',
-                        instructions: 'Lie on your back with arms up and knees bent. Slowly lower the opposite arm and leg, then return.',
-                        watch: 'Keep your lower back gently supported against the floor.',
-                        easier: 'Move only one limb at a time.',
-                        harder: 'Straighten the moving leg further.',
-                        snow: 'A steady trunk helps transfer movement between your upper and lower body.'
-                    },
-                    {
-                        id: 'side-plank',
-                        name: 'Side plank',
-                        sets: '3',
-                        reps: '20',
-                        measure: 'sec/side',
-                        instructions: 'Support yourself on your forearm and side of your foot or knee. Lift hips and hold a straight line.',
-                        watch: 'Keep shoulder away from your ear and hips lifted.',
-                        easier: 'Bend your knees and support yourself from them.',
-                        harder: 'Hold longer or lift the top leg slightly.',
-                        snow: 'Side-body endurance supports a controlled, centered stance.'
-                    }]
-            },
+            strength3,
             {
                 id: 'six-d',
                 title: 'Recovery & mobility',
