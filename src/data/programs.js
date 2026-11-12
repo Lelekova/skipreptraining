@@ -449,10 +449,98 @@ const powerConditioning1 = {
             image: '',
             focus: 'Hard but repeatable effort',
             instructions: 'Jog for 5 minutes, then alternate 40 seconds of hard running and 20 seconds of recovery ten times. Jog for 5 minutes to cool down.',
-            watch: 'Choose a pace you can repeat across all intervals; keep the final interval controlled.',
+            watch: 'Your pace should feel hard, but controlled enough to repeat across all ten ' +
+                'intervals. The final interval should still look like running, not survival.',
             easier: 'Use a stationary bike or rowing machine with the same work and recovery timing.',
             harder: '',
-            snow: ''
+            snow: 'FROM CARV\'S DATA. Edge similarity is usually the first thing to go. ' +
+                'Across those same 90,000 ski days, it dropped between the first hour and ' +
+                'the last in 78% of them. Tired legs stop working independently, and the two ' +
+                'skis stop matching.'
+        }]
+};
+
+const powerConditioning2 = {
+    id: 'power-conditioning-1',
+    title: 'Power Conditioning 1',
+    focus: '4 power exercises + running intervals',
+    description: 'This session builds your ability to produce force quickly in different ' +
+        'directions, while keeping your body stable and controlled. It finishes with ' +
+        'longer intervals at a slightly lower intensity than Power/Conditioning 1, training you to ' +
+        'sustain hard efforts and recover before going again.\n' +
+        'Complete the full mobility and activation warm-up before you start. Keep ' +
+        'the jumps controlled and prioritise the quality of every landing',
+    duration: '45 min',
+    exercises: [
+        {
+            id: 'pc2-01-broad-jump-vertical-jump',
+            name: 'Broad jump to vertical jump',
+            sets: '4',
+            reps: '4',
+            measure: 'reps',
+            image: '',
+            focus: 'Bodyweight',
+            instructions: 'Jump forward and land softly. Once balanced, jump straight upward, land under control, reset, and repeat.',
+            watch: 'Do not jump farther than you can control on the first landing.',
+            easier: 'Pause fully between jumps or practise each jump separately.',
+            harder: '',
+            snow: 'Trains force production in a new direction for adapting to unexpected terrain changes.'
+        },
+        {
+            id: 'pc2-02-squat-jump',
+            name: 'Squat jump',
+            sets: '4',
+            reps: '10',
+            measure: 'reps',
+            image: '',
+            focus: 'Bodyweight',
+            instructions: 'Lower into a squat, jump upward, and land softly by bending your ankles, knees, and hips. Reset before the next jump.',
+            watch: 'Maintain jump and landing quality as you tire; pause when needed.',
+            easier: 'Do 5-6 repetitions per set.',
+            harder: '',
+            snow: 'Builds repeated explosive leg power for managing pressure through successive turns.'
+        },
+        {
+            id: 'pc2-03-lateral-medicine-ball-toss',
+            name: 'Lateral medicine ball toss',
+            sets: '4',
+            reps: '8',
+            measure: 'reps/side',
+            image: '',
+            focus: 'Moderate medicine ball',
+            instructions: 'Stand side-on to a solid wall with the ball near the hip farthest from it. Rotate through your hips and trunk to throw, retrieve, reset, and repeat.',
+            watch: 'Generate the throw through the floor, hips, and trunk rather than only your arms.',
+            easier: '',
+            harder: '',
+            snow: 'Develops rotational power while coordinating the upper and lower body.'
+        },
+        {
+            id: 'pc2-04-kettlebell-swings',
+            name: 'Kettlebell swings',
+            sets: '4',
+            reps: '10',
+            measure: 'reps',
+            image: '',
+            focus: 'Challenging load with clean form',
+            instructions: 'Hold the kettlebell with both hands. Hinge to swing it between your legs, then drive your hips forward to send it toward chest height.',
+            watch: 'Make it a hip hinge, not a squat. Let your hips create the power; your arms guide the bell.',
+            easier: '',
+            harder: '',
+            snow: 'Builds glute and hamstring power and endurance for repeated quick movements through turns.'
+        },
+        {
+            id: 'pc2-05-conditioning-intervals',
+            name: 'Conditioning intervals',
+            sets: '10',
+            reps: '1 hard / 1 easy',
+            measure: 'min',
+            image: '',
+            focus: 'Hard, repeatable efforts · 20 minutes',
+            instructions: 'For 10 minutes, alternate one minute of hard running at about 80% effort with one minute of easy running.',
+            watch: 'Avoid starting so hard that your pace falls apart in later intervals.',
+            easier: '',
+            harder: '',
+            snow: 'Builds the ability to repeat hard efforts and recover between them while maintaining technique.'
         }]
 };
 
@@ -471,38 +559,7 @@ export const programs = [
             strength2,
             strength3,
             powerConditioning1,
-            {
-                id: 'six-e',
-                title: 'Power & agility',
-                focus: 'Power',
-                description: 'Practice low-impact quickness and controlled landings. Stop if your form becomes sloppy.',
-                duration: '40 min',
-                exercises: [
-                    {
-                        id: 'lateral-step',
-                        name: 'Lateral step and stick',
-                        sets: '3',
-                        reps: '6',
-                        measure: 'reps/side',
-                        instructions: 'Step sideways with purpose, land softly on one foot and hold your balance for two seconds.',
-                        watch: 'Land quietly with knee aligned over the foot.',
-                        easier: 'Take a smaller step and use support.',
-                        harder: 'Increase distance only while landing stays quiet and controlled.',
-                        snow: 'Lateral control helps with changing direction and stabilizing your stance.'
-                    },
-                    {
-                        id: 'sit-to-stand',
-                        name: 'Tempo sit-to-stand',
-                        sets: '3',
-                        reps: '10',
-                        measure: 'reps',
-                        instructions: 'Sit back to a chair over three seconds, then stand up smoothly.',
-                        watch: 'Keep your feet grounded and knees tracking over toes.',
-                        easier: 'Use a higher chair or your hands for support.',
-                        harder: 'Hold a light weight at your chest.',
-                        snow: 'Controlled leg strength supports repeated flexion and extension while skiing.'
-                    }]
-            },
+            powerConditioning2,
             {
                 id: 'six-f',
                 title: 'Full-body strength',
