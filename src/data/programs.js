@@ -768,7 +768,7 @@ const warmupExercises = [
         sets: '1',
         reps: '10-15',
         measure: 'reps/side',
-        image: '',
+        image: 'images/wu2.png',
         focus: 'Bodyweight',
         instructions: 'Lie on your back with arms above your shoulders and knees bent over your hips. Slowly extend opposite arm and leg, return, then switch sides.',
         watch: 'Keep your lower back gently pressed into the floor. Shorten the reach if it lifts.',
