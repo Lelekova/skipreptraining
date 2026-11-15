@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {
     Activity,
     ArrowLeft,
@@ -14,10 +14,28 @@ import {
 import {programs} from './data/programs.js';
 
 const STORAGE_KEY = 'snowbound-training-v1', MAX_TIMER_MS = 2 * 60 * 60 * 1000;
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+function scheduleLabel(program, workoutIndex) {
+    const workoutsPerWeek = Math.min(program.workoutsPerWeek || WEEKDAYS.length, WEEKDAYS.length);
+    const week = Math.floor(workoutIndex / workoutsPerWeek) + 1;
+    const weekday = WEEKDAYS[workoutIndex % workoutsPerWeek];
+    return program.workouts.length > workoutsPerWeek ? `Week ${week} · ${weekday}` : weekday
+}
+
+function normalizeHistory(value) {
+    if (Array.isArray(value)) return value.filter(ts => Number.isFinite(ts));
+    return Number.isFinite(value) ? [value] : []
+}
 
 function readSaved() {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {completed: {}, activeTimer: null}
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        return {
+            ...saved,
+            completed: Object.fromEntries(Object.entries(saved.completed || {}).map(([key, value]) => [key, normalizeHistory(value)])),
+            activeTimer: saved.activeTimer || null
+        }
     } catch {
         return {completed: {}, activeTimer: null}
     }
@@ -33,7 +51,8 @@ function localDate(ts) {
 }
 
 export default function App() {
-    const [selectedProgramId, setSelectedProgramId] = useState(null), [selectedWorkoutId, setSelectedWorkoutId] = useState(null), [expandedExercise, setExpandedExercise] = useState(null), [warmupOpen, setWarmupOpen] = useState(false), [exercisesOpen, setExercisesOpen] = useState(true), [saved, setSaved] = useState(readSaved), [now, setNow] = useState(Date.now());
+    const [selectedProgramId, setSelectedProgramId] = useState(null), [selectedWorkoutId, setSelectedWorkoutId] = useState(null), [expandedExercise, setExpandedExercise] = useState(null), [warmupOpen, setWarmupOpen] = useState(false), [exercisesOpen, setExercisesOpen] = useState(true), [showInfo, setShowInfo] = useState(false), [saved, setSaved] = useState(readSaved), [now, setNow] = useState(Date.now());
+    const touchStart = useRef(null);
     const program = programs.find(p => p.id === selectedProgramId),
         workout = program?.workouts.find(w => w.id === selectedWorkoutId);
     useEffect(() => {
@@ -47,12 +66,15 @@ export default function App() {
         return () => clearInterval(id)
     }, []);
     useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [selectedProgramId, selectedWorkoutId, showInfo]);
+    useEffect(() => {
         if (saved.activeTimer && now - saved.activeTimer.startedAt >= MAX_TIMER_MS) finish(saved.activeTimer.workoutKey, saved.activeTimer.startedAt + MAX_TIMER_MS)
     }, [now]);
 
     function finish(key, ts = Date.now()) {
         setSaved(s => ({
-            completed: {...s.completed, [key]: ts},
+            completed: {...s.completed, [key]: [...normalizeHistory(s.completed[key]), ts]},
             activeTimer: s.activeTimer?.workoutKey === key ? null : s.activeTimer
         }))
     }
@@ -73,16 +95,50 @@ export default function App() {
     function reset(programId = null) {
         setSelectedProgramId(programId);
         setSelectedWorkoutId(null);
-        setExpandedExercise(null)
+        setExpandedExercise(null);
+        setShowInfo(false)
+    }
+
+    function resetProgress() {
+        if (!window.confirm('Reset all workout history on this device? This cannot be undone.')) return;
+        setSaved(current => ({...current, completed: {}}))
+    }
+
+    function handleTouchStart(event) {
+        if (event.touches.length !== 1 || event.target.closest('button, a, input, textarea, select')) {
+            touchStart.current = null;
+            return
+        }
+        const {clientX, clientY} = event.touches[0];
+        touchStart.current = {x: clientX, y: clientY}
+    }
+
+    function handleTouchEnd(event) {
+        if (!touchStart.current || event.changedTouches.length !== 1) return;
+        const start = touchStart.current;
+        touchStart.current = null;
+        const {clientX, clientY} = event.changedTouches[0];
+        const deltaX = clientX - start.x, deltaY = clientY - start.y;
+        if (deltaX < 80 || Math.abs(deltaY) > Math.abs(deltaX) * 0.75) return;
+
+        if (selectedWorkoutId) {
+            setSelectedWorkoutId(null);
+            setExpandedExercise(null)
+        } else if (selectedProgramId) {
+            reset()
+        } else if (showInfo) {
+            setShowInfo(false)
+        }
     }
 
     const progress = useMemo(() => programs.map(p => ({
         ...p,
-        done: p.workouts.filter(w => saved.completed[`${p.id}:${w.id}`]).length
+        done: p.workouts.filter(w => normalizeHistory(saved.completed[`${p.id}:${w.id}`]).length > 0).length
     })), [saved.completed]);
-    const key = workout ? `${selectedProgramId}:${workout.id}` : null, completed = key ? saved.completed[key] : null,
+    const key = workout ? `${selectedProgramId}:${workout.id}` : null,
+        history = key ? normalizeHistory(saved.completed[key]) : [], completed = history.length > 0,
         elapsed = saved.activeTimer ? Math.min(now - saved.activeTimer.startedAt, MAX_TIMER_MS) : 0;
-    return <div className="app-shell">
+    return <div className="app-shell" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStart.current = null }}>
         <header className="topbar">
             <button className="brand" onClick={() => reset()} aria-label="Snowbound home"><span
                 className="brand-mark"><Mountain size={19}/></span><span>SNOWBOUND<span
@@ -90,7 +146,7 @@ export default function App() {
             <div className="top-meta"><span className="season-dot"/> YOUR SEASON STARTS HERE</div>
         </header>
         <main className="main-content">
-            {!program && <>
+            {!program && !showInfo && <>
                 <section className="hero">
                     <div className="hero-copy">
                         <div className="eyebrow"><Snowflake size={14}/> THE MOUNTAIN IS CALLING</div>
@@ -139,6 +195,57 @@ export default function App() {
                 <aside className="tip-strip"><span className="tip-icon"><Snowflake size={18}/></span><p><strong>A note
                     before you begin</strong><br/>Start at a level that feels right for you. Consistency beats intensity
                     every time.</p><span className="tip-scribble">✳</span></aside>
+                <div className="home-info-link">
+                    <button onClick={() => setShowInfo(true)}>ABOUT THIS PROJECT &amp; ITS AUTHORS <span>↗</span>
+                    </button>
+                    <button className="reset-progress-button" onClick={resetProgress}>RESET WORKOUT HISTORY</button>
+                </div>
+            </>}
+            {showInfo && !program && <>
+                <button className="back-link" onClick={() => setShowInfo(false)}><ArrowLeft size={16}/> BACK TO HOME
+                </button>
+                <section className="info-page">
+                    <div className="eyebrow">SNOWBOUND · INFORMATION</div>
+                    <h1>About this <span className="title-period">project.</span></h1><p className="info-intro">A little
+                    context about the training content, its sources, and the people behind this project.</p>
+                    <section className="info-card"><h2>About the application</h2><p>This application is a
+                        ski-preparation program that was made out of a program in a PDF format.
+                        The aim of the application is to make it easier to navigate through the program and exercises
+                        during the workout, plus to track the history of the workouts. <br/>
+                        It is created by using ChatGPT as a "pet-project" for personal use. <br/>
+                        This application stores data locally in a web browser, therefore there is no data sync
+                        between the devices, and the progress might be lost due to the session expiry.
+                        </p></section>
+                    <section className="info-card"><h2>Sources and attribution</h2><p>
+                        The program described in the application is based on the program provided by
+                        <a href='https://getcarv.com/'>CARV</a> as a gift to their customers in the PDF format.
+                        It is compound by <strong>Katie White</strong>, member of the <strong>PSIA Alpine National Team</strong>,
+                        <i>14 winter seasons coaching in Montana and 11 in Chile, leads instructor training at Yellowstone Club in Montana,
+                        and directs the ski school at Portillo in Chile</i>,
+                        with the aim to prolong your skiing days and get the maximum joy out of them!<br/>
+                        All the images depicting the exercises are taken from the same PDF file, and are demonstrated
+                        by <strong>Abi Taylor</strong>, <i>personal trainer and gym director at Stanza Fitness in the UK,
+                        with more than 10 years of coaching experience</i>; and <strong>Paul McConnell</strong>, <i>level 3
+                        personal trainer and Functional Range Conditioning mobility specialist based in the UK</i>.<br/>
+                        Other sources:
+                    </p>
+                        <ul>
+                            <li><a href='https://youtube.com/shorts/faa3ZXWR3Cc?si=jE4FZPz5EaQEsWmV'>Carioca exercise</a></li>
+                            <li><a href='https://youtube.com/shorts/dNSjoSLNCLM?si=eQqKw__vCNgeLvRt'>Lateral in-out Agility ladder exercise</a></li>
+                            <li><a href='https://youtube.com/shorts/6Eyer7ZiByI?si=VZ64bfBOaChIRGct'>Front in-out Agility ladder exercise</a></li>
+                        </ul>
+                    </section>
+                    <section className="info-card"><h2>About the application's author</h2><p>
+                        This application was created by <strong>Natalia Lelekova</strong>, a fan of skiing and
+                        simply a person who can't wait for the season to start,
+                        as a personal project to organize ski-preparation workouts.</p></section>
+                    <section className="info-note"><strong>Important</strong><p>
+                        The author of this Web Application is intended to use it for the personal use. However, if someone
+                        finds it a violation of the copyrights, the author will delete the application immediately.<br/>
+                        For such matters, please contact me by creating an issue in
+                        <a href='https://github.com/Lelekova/skipreptraining/issues'>my GitHub repository</a>.
+                    </p></section>
+                </section>
             </>}
             {program && !workout && <>
                 <button className="back-link" onClick={() => reset()}><ArrowLeft size={16}/> ALL PROGRAMS</button>
@@ -153,18 +260,17 @@ export default function App() {
                 <section className="workout-list">
                     <div className="list-heading">
                         <span>TRAINING SCHEDULE</span><span>{program.workouts.length} SESSIONS</span></div>
-                    {program.workouts.map((item, i) => {
-                        const done = saved.completed[`${program.id}:${item.id}`];
+                    {program.workouts.map((item, index) => {
+                        const done = normalizeHistory(saved.completed[`${program.id}:${item.id}`]);
                         return <button className="workout-row" key={item.id} onClick={() => {
                             setSelectedWorkoutId(item.id);
                             setExpandedExercise(null);
                             setWarmupOpen(Boolean(item.warmupOnly));
                             setExercisesOpen(true)
-                        }}><span className="workout-number">{String(i + 1).padStart(2, '0')}</span><span
-                            className="workout-day">{item.day}</span><span
-                            className="workout-title">{item.title}<small>{item.warmupOnly ? 'Warm-up only' : `${item.focus} · ${item.exercises.length} exercises`}</small></span><span
-                            className="workout-duration"><Clock3 size={14}/>{item.duration}</span>{done &&
-                            <span className="done-chip"><Check size={13}/>{localDate(done)}</span>}<span
+                        }}><span className="workout-day">{scheduleLabel(program, index)}</span><span
+                            className="workout-title">{item.title}<small>{item.restDay ? 'Rest day' : item.warmupOnly ? 'Warm-up only' : `${item.focus} · ${item.exercises.length} exercises`}</small></span>{!item.restDay && <span
+                            className="workout-duration"><Clock3 size={14}/>{item.duration}</span>}{done.length > 0 &&
+                            <span className="done-chip"><Check size={13}/>{localDate(done.at(-1))}</span>}<span
                             className="row-arrow">↗</span></button>
                     })}</section>
             </>}
@@ -176,23 +282,26 @@ export default function App() {
             <div className="workout-layout">
                 <section className="workout-main">
                     <div className="workout-hero">
-                        <div className="eyebrow">{workout.day.toUpperCase()} · {workout.focus.toUpperCase()}</div>
+                        <div className="eyebrow">{workout.focus.toUpperCase()}</div>
                         <h1>{workout.title}<span className="title-period">.</span></h1>
-                        <div className="workout-quick"><span><Clock3 size={15}/>{workout.duration}</span><span><Dumbbell
+                        {!workout.restDay && <div className="workout-quick"><span><Clock3 size={15}/>{workout.duration}</span><span><Dumbbell
                             size={15}/>{workout.warmupOnly ? 'Warm-up only' : `${workout.warmup.length} warm-up + ${workout.exercises.length} exercises`}</span>
-                        </div>
-                        <p>{workout.description}</p>{completed &&
-                        <div className="completion-banner"><span className="completion-check"><Check
-                            size={17}/></span><span>WORKOUT COMPLETE<strong>{localDate(completed)}</strong></span>
                         </div>}
-                        <button className={`start-button ${saved.activeTimer ? 'is-disabled' : ''}`} onClick={start}
+                        <p>{workout.description}</p>{completed &&
+                        <div className="completion-banner"><span className="completion-check"><Check size={17}/></span>
+                            <div className="completion-history">
+                                <span>WORKOUT HISTORY</span>{history.slice().reverse().map((date, index) => <strong
+                                key={`${date}-${index}`}>{localDate(date)}</strong>)}</div>
+                        </div>}
+                        {!workout.restDay && <button className={`start-button ${saved.activeTimer ? 'is-disabled' : ''}`} onClick={start}
                                 disabled={Boolean(saved.activeTimer)}><Play size={15}
                                                                             fill="currentColor"/>{saved.activeTimer ? 'A WORKOUT TIMER IS RUNNING' : 'START THIS WORKOUT'}<span>↗</span>
-                        </button>
-                        {saved.activeTimer &&
+                        </button>}
+                        {!workout.restDay && saved.activeTimer &&
                             <p className="timer-hint">Stop your current timer before starting another workout.</p>}
                     </div>
-                    <ExerciseSection title="Warm-up" label="GET READY" exercises={workout.warmup}
+                    {workout.restDay && <p className="rest-day-note">No workout is scheduled today. Rest and recover before your next session.</p>}
+                    {!workout.restDay && <><ExerciseSection title="Warm-up" label="GET READY" exercises={workout.warmup}
                                      expandedExercise={expandedExercise} onToggle={setExpandedExercise}
                                      sectionId="warmup" isOpen={warmupOpen}
                                      onSectionToggle={() => setWarmupOpen(open => !open)}/>{!workout.warmupOnly &&
@@ -201,7 +310,7 @@ export default function App() {
                                      onSectionToggle={() => setExercisesOpen(open => !open)}/>}{workout.warmupOnly &&
                         <p className="warmup-only-note">This session is your shared warm-up. Move comfortably and finish
                             feeling
-                            ready.</p>}</section><aside className="side-note"><div className="side-note-icon"><Snowflake size={17}/>
+                            ready.</p>}</>}</section><aside className="side-note"><div className="side-note-icon"><Snowflake size={17}/>
             </div>
             <div className="eyebrow">TRAIN SMART</div>
             <p>Quality reps matter more than speed. Take a breather whenever you need one.</p>
@@ -225,15 +334,32 @@ export default function App() {
 function Detail({
     label, text
 }){
+    const value = typeof text === 'string' ? text.trim() : text;
+    if (!value) return null;
     return <div className="detail-item">
         <div className="detail-label">{label}</div>
-        <p>{text}</p></div>
+        <p>{value}</p></div>
 }
 
 function ExerciseSection({
     title = 'Exercises', label = 'THE WORK', exercises, expandedExercise, onToggle, sectionId, isOpen, onSectionToggle
 }){
     const contentId = `${sectionId}-exercise-list`;
+    const cardRefs = useRef({});
+
+    useLayoutEffect(() => {
+        if (!expandedExercise?.startsWith(`${sectionId}:`)) return;
+        const exerciseId = expandedExercise.slice(sectionId.length + 1);
+        const card = cardRefs.current[exerciseId];
+        if (!card) return;
+
+        const frame = requestAnimationFrame(() => {
+            const top = Math.max(0, window.scrollY + card.getBoundingClientRect().top - 12);
+            window.scrollTo(0, top);
+        });
+        return () => cancelAnimationFrame(frame);
+    }, [expandedExercise, sectionId]);
+
     return <section className="exercise-section" aria-label={title}>
         <div className="exercise-heading">
             <div>
@@ -245,23 +371,29 @@ function ExerciseSection({
                 </h2>
             </div>
             <span className="expand-note">TAP AN EXERCISE TO LEARN MORE</span></div>
-        {isOpen && <div className="exercise-list" id={contentId}>{exercises.map((ex, i) => {
-            const key = `${sectionId}:${ex.id}`, open = expandedExercise === key;
-            return <article className={`exercise-card ${open ? 'open' : ''}`} key={key}>
+        {isOpen && <div className="exercise-list" id={contentId}>{exercises.map(ex => {
+            const key = `${sectionId}:${ex.id}`, open = expandedExercise === key,
+                hasDetails = ['instructions', 'watch', 'easier', 'harder'].some(field => typeof ex[field] === 'string' && ex[field].trim()),
+                hasSnow = typeof ex.snow === 'string' && ex.snow.trim();
+            return <article className={`exercise-card ${open ? 'open' : ''}`} key={key}
+                            ref={element => {
+                                if (element) cardRefs.current[ex.id] = element;
+                                else delete cardRefs.current[ex.id];
+                            }}>
                 <button className="exercise-summary" aria-expanded={open} onClick={() => onToggle(open ? null : key)}>
-                    <span className="exercise-number">{String(i + 1).padStart(2, '0')}</span><span
-                    className="exercise-name">{ex.name}<small>{ex.focus || 'CONTROLLED MOVEMENT'}</small></span><span
+                    <span
+                        className="exercise-name">{ex.name}<small>{ex.focus || 'CONTROLLED MOVEMENT'}</small></span><span
                     className="exercise-prescription"><strong>{ex.sets}</strong><small>SETS</small></span><span
-                    className="exercise-prescription reps"><strong>{ex.reps}</strong><small>REPS / TIME</small></span><span
+                    className="exercise-prescription reps"><strong>{ex.reps}</strong><small>{(ex.measure || 'reps').toUpperCase()}</small></span><span
                     className="expand-toggle"><ChevronDown size={17}/></span></button>
                 {open && <div className="exercise-details">{ex.image &&
-                    <img className="exercise-image" src={ex.image} alt={`${ex.name} demonstration`} loading="lazy"/>}
+                    <img className="exercise-image" src={ex.image} alt={`${ex.name} demonstration`}
+                         loading="lazy"/>}{hasDetails &&
                     <div className="detail-grid"><Detail label="HOW TO DO IT" text={ex.instructions}/><Detail
                         label="PAY ATTENTION TO" text={ex.watch}/><Detail label="MAKE IT EASIER"
                                                                           text={ex.easier}/><Detail
-                        label="MAKE IT HARDER" text={ex.harder}/></div>
+                        label="MAKE IT HARDER" text={ex.harder}/></div>}{hasSnow &&
                     <div className="snow-benefit"><span><Mountain size={16}/></span><p><small>WHY IT HELPS ON
-                        SNOW</small>{ex.snow}</p></div>
-                </div>}</article>
+                        SNOW</small>{ex.snow}</p></div>}</div>}</article>
         })}</div>}</section>
 }
