@@ -153,9 +153,9 @@ export default function App() {
                         <h1>Strong legs.<br/><span>Longer days.</span></h1><p>Get mountain-ready with a training plan
                         built for the way you ski.</p>
                         <div className="hero-stats">
-                            <div><strong>02</strong><span>PLAN LENGTHS</span></div>
-                            <i/>
                             <div><strong>02</strong><span>PLANS</span></div>
+                            <i/>
+                            <div><strong>06</strong><span>WORKOUTS</span></div>
                             <i/>
                             <div><strong>01</strong><span>GOAL: SNOW</span></div>
                         </div>
@@ -175,8 +175,8 @@ export default function App() {
                         <div>
                             <div className="eyebrow">CHOOSE YOUR RHYTHM</div>
                             <h2>Your training plan</h2></div>
-                        <div className="heading-note"><span className="note-dot"/> 6-DAY · 8 WEEKS &nbsp; / &nbsp; 3-DAY
-                            · 2 WEEKS
+                        <div className="heading-note"><span className="note-dot"/> 6-DAY · 6 WEEKS &nbsp; / &nbsp; 3-DAY
+                            · 6 WEEKS
                         </div>
                     </div>
                     <div className="program-grid">{progress.map((p, i) => <button
