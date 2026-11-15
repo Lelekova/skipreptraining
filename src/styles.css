@@ -741,6 +741,7 @@ h1, h2, h3, p {
 }
 
 .exercise-card {
+    scroll-margin-top: 16px;
     border-top: 1px solid #2b2b2e
 }
 

@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {
     Activity,
     ArrowLeft,
@@ -345,6 +345,21 @@ function ExerciseSection({
     title = 'Exercises', label = 'THE WORK', exercises, expandedExercise, onToggle, sectionId, isOpen, onSectionToggle
 }){
     const contentId = `${sectionId}-exercise-list`;
+    const cardRefs = useRef({});
+
+    useLayoutEffect(() => {
+        if (!expandedExercise?.startsWith(`${sectionId}:`)) return;
+        const exerciseId = expandedExercise.slice(sectionId.length + 1);
+        const card = cardRefs.current[exerciseId];
+        if (!card) return;
+
+        const frame = requestAnimationFrame(() => {
+            const top = Math.max(0, window.scrollY + card.getBoundingClientRect().top - 12);
+            window.scrollTo(0, top);
+        });
+        return () => cancelAnimationFrame(frame);
+    }, [expandedExercise, sectionId]);
+
     return <section className="exercise-section" aria-label={title}>
         <div className="exercise-heading">
             <div>
@@ -360,7 +375,11 @@ function ExerciseSection({
             const key = `${sectionId}:${ex.id}`, open = expandedExercise === key,
                 hasDetails = ['instructions', 'watch', 'easier', 'harder'].some(field => typeof ex[field] === 'string' && ex[field].trim()),
                 hasSnow = typeof ex.snow === 'string' && ex.snow.trim();
-            return <article className={`exercise-card ${open ? 'open' : ''}`} key={key}>
+            return <article className={`exercise-card ${open ? 'open' : ''}`} key={key}
+                            ref={element => {
+                                if (element) cardRefs.current[ex.id] = element;
+                                else delete cardRefs.current[ex.id];
+                            }}>
                 <button className="exercise-summary" aria-expanded={open} onClick={() => onToggle(open ? null : key)}>
                     <span
                         className="exercise-name">{ex.name}<small>{ex.focus || 'CONTROLLED MOVEMENT'}</small></span><span
