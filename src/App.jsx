@@ -191,7 +191,7 @@ export default function App() {
                     before you begin</strong><br/>Start at a level that feels right for you. Consistency beats intensity
                     every time.</p><span className="tip-scribble">✳</span></aside>
                 <div className="home-info-link">
-                    <button onClick={() => setShowInfo(true)}>ABOUT THIS PROGRAM &amp; ITS AUTHOR <span>↗</span>
+                    <button onClick={() => setShowInfo(true)}>ABOUT THIS PROJECT &amp; ITS AUTHORS <span>↗</span>
                     </button>
                 </div>
             </>}
@@ -200,25 +200,37 @@ export default function App() {
                 </button>
                 <section className="info-page">
                     <div className="eyebrow">SNOWBOUND · INFORMATION</div>
-                    <h1>About this <span className="title-period">program.</span></h1><p className="info-intro">A little
-                    context about the training content, its sources, and the person behind this project.</p>
-                    <section className="info-card"><h2>About the training content</h2><p>This application is a personal
-                        ski-preparation project. The current program and exercise descriptions are sample content
-                        provided to demonstrate the app. They have not been independently validated as a personalized
-                        training plan.</p><p>Before publishing or relying on the program, replace this text with an
-                        accurate description of how the content was developed and reviewed.</p></section>
-                    <section className="info-card"><h2>Sources and attribution</h2><p>Add the actual sources used to
-                        create or verify the workouts and exercise instructions. Include the source title, author or
-                        organization, link, and any required attribution or license information.</p><p>If an exercise
-                        image is used, identify its creator and source, and confirm that you have permission to use it.
-                        Do not list a source unless it was actually used.</p></section>
-                    <section className="info-card"><h2>About the author</h2><p>This application was created by <strong>Natalia
-                        Lelekova</strong> as a personal project to organize ski-preparation workouts.</p><p>You can add
-                        a short biography, relevant experience, and a contact or profile link here.</p></section>
-                    <section className="info-note"><strong>Important</strong><p>Training needs vary. The sample material
-                        is general information and is not medical advice or a substitute for guidance from a qualified
-                        professional. Review all content, sources, image rights, and claims before making the app
-                        public.</p></section>
+                    <h1>About this <span className="title-period">project.</span></h1><p className="info-intro">A little
+                    context about the training content, its sources, and the people behind this project.</p>
+                    <section className="info-card"><h2>About the application</h2><p>This application is a
+                        ski-preparation program that was made out of a program in a PDF format.
+                        The aim of the application is to make it easier to navigate through the program and exercises
+                        during the workout, plus to track the history of the workouts. <br/>
+                        It is created by using ChatGPT as a "pet-project" for personal use.
+                        </p></section>
+                    <section className="info-card"><h2>Sources and attribution</h2><p>
+                        The program described in the application is based on the program provided by
+                        <a href='https://getcarv.com/'>CARV</a> as a gift to their customers in the PDF format.
+                        It is compound by <strong>Katie White</strong>, member of the <strong>PSIA Alpine National Team</strong>,
+                        <i>14 winter seasons coaching in Montana and 11 in Chile, leads instructor training at Yellowstone Club in Montana,
+                        and directs the ski school at Portillo in Chile</i>,
+                        with the aim to prolong your skiing days and get the maximum joy out of them!<br/>
+                        All the images depicting the exercises are taken from the same PDF file, and are demonstrated
+                        by <strong>Abi Taylor</strong>, <i>personal trainer and gym director at Stanza Fitness in the UK,
+                        with more than 10 years of coaching experience</i>; and <strong>Paul McConnell</strong>, <i>level 3
+                        personal trainer and Functional Range Conditioning mobility specialist based in the UK</i>.
+                    </p>
+                    </section>
+                    <section className="info-card"><h2>About the application's author</h2><p>
+                        This application was created by <strong>Natalia Lelekova</strong>, a fan of skiing and
+                        simply a person who can't wait for the season to start,
+                        as a personal project to organize ski-preparation workouts.</p></section>
+                    <section className="info-note"><strong>Important</strong><p>
+                        The author of this Web Application is intended to use it for the personal use. However, if someone
+                        finds it a violation of the copyrights, the author will delete the application immediately.<br/>
+                        For such matters, please contact me by creating an issue in
+                        <a href='https://github.com/Lelekova/skipreptraining/issues'>my GitHub repository</a>.
+                    </p></section>
                 </section>
             </>}
             {program && !workout && <>
