@@ -226,8 +226,14 @@ export default function App() {
                         All the images depicting the exercises are taken from the same PDF file, and are demonstrated
                         by <strong>Abi Taylor</strong>, <i>personal trainer and gym director at Stanza Fitness in the UK,
                         with more than 10 years of coaching experience</i>; and <strong>Paul McConnell</strong>, <i>level 3
-                        personal trainer and Functional Range Conditioning mobility specialist based in the UK</i>.
+                        personal trainer and Functional Range Conditioning mobility specialist based in the UK</i>.<br/>
+                        Other sources:
                     </p>
+                        <ul>
+                            <li><a href='https://youtube.com/shorts/faa3ZXWR3Cc?si=jE4FZPz5EaQEsWmV'>Carioca exercise</a></li>
+                            <li><a href='https://youtube.com/shorts/dNSjoSLNCLM?si=eQqKw__vCNgeLvRt'>Lateral in-out Agility ladder exercise</a></li>
+                            <li><a href='https://youtube.com/shorts/6Eyer7ZiByI?si=VZ64bfBOaChIRGct'>Front in-out Agility ladder exercise</a></li>
+                        </ul>
                     </section>
                     <section className="info-card"><h2>About the application's author</h2><p>
                         This application was created by <strong>Natalia Lelekova</strong>, a fan of skiing and
