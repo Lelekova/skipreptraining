@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {
     Activity,
     ArrowLeft,
@@ -52,6 +52,7 @@ function localDate(ts) {
 
 export default function App() {
     const [selectedProgramId, setSelectedProgramId] = useState(null), [selectedWorkoutId, setSelectedWorkoutId] = useState(null), [expandedExercise, setExpandedExercise] = useState(null), [warmupOpen, setWarmupOpen] = useState(false), [exercisesOpen, setExercisesOpen] = useState(true), [showInfo, setShowInfo] = useState(false), [saved, setSaved] = useState(readSaved), [now, setNow] = useState(Date.now());
+    const touchStart = useRef(null);
     const program = programs.find(p => p.id === selectedProgramId),
         workout = program?.workouts.find(w => w.id === selectedWorkoutId);
     useEffect(() => {
@@ -65,6 +66,9 @@ export default function App() {
         return () => clearInterval(id)
     }, []);
     useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [selectedProgramId, selectedWorkoutId, showInfo]);
+    useEffect(() => {
         if (saved.activeTimer && now - saved.activeTimer.startedAt >= MAX_TIMER_MS) finish(saved.activeTimer.workoutKey, saved.activeTimer.startedAt + MAX_TIMER_MS)
     }, [now]);
 
@@ -76,7 +80,7 @@ export default function App() {
     }
 
     function start() {
-        if (!workout || workout.restDay || saved.activeTimer) return;
+        if (!workout || saved.activeTimer) return;
         setSaved(s => ({
             ...s,
             activeTimer: {
@@ -95,6 +99,33 @@ export default function App() {
         setShowInfo(false)
     }
 
+    function handleTouchStart(event) {
+        if (event.touches.length !== 1 || event.target.closest('button, a, input, textarea, select')) {
+            touchStart.current = null;
+            return
+        }
+        const {clientX, clientY} = event.touches[0];
+        touchStart.current = {x: clientX, y: clientY}
+    }
+
+    function handleTouchEnd(event) {
+        if (!touchStart.current || event.changedTouches.length !== 1) return;
+        const start = touchStart.current;
+        touchStart.current = null;
+        const {clientX, clientY} = event.changedTouches[0];
+        const deltaX = clientX - start.x, deltaY = clientY - start.y;
+        if (deltaX < 80 || Math.abs(deltaY) > Math.abs(deltaX) * 0.75) return;
+
+        if (selectedWorkoutId) {
+            setSelectedWorkoutId(null);
+            setExpandedExercise(null)
+        } else if (selectedProgramId) {
+            reset()
+        } else if (showInfo) {
+            setShowInfo(false)
+        }
+    }
+
     const progress = useMemo(() => programs.map(p => ({
         ...p,
         done: p.workouts.filter(w => normalizeHistory(saved.completed[`${p.id}:${w.id}`]).length > 0).length
@@ -102,7 +133,7 @@ export default function App() {
     const key = workout ? `${selectedProgramId}:${workout.id}` : null,
         history = key ? normalizeHistory(saved.completed[key]) : [], completed = history.length > 0,
         elapsed = saved.activeTimer ? Math.min(now - saved.activeTimer.startedAt, MAX_TIMER_MS) : 0;
-    return <div className="app-shell">
+    return <div className="app-shell" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStart.current = null }}>
         <header className="topbar">
             <button className="brand" onClick={() => reset()} aria-label="Snowbound home"><span
                 className="brand-mark"><Mountain size={19}/></span><span>SNOWBOUND<span
