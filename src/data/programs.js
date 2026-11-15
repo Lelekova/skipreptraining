@@ -696,14 +696,15 @@ const endurance = {
         }]
 };
 
-const rest = {
-    id: 'rest',
-    title: 'Rest/Easy Walk',
+const restDay = id => ({
+    id,
+    title: 'Rest day',
     focus: 'Recovery',
-    description: 'Today is your rest day. You can go for a short walk or skip activities at all.',
+    description: 'Take a rest day. If you feel like moving, go for an easy walk; otherwise, take the day off.',
+    restDay: true,
     exercises: [],
     warmup: []
-};
+});
 
 export const programs = [
     {
@@ -723,7 +724,7 @@ export const programs = [
             strength1,
             powerConditioning1,
             strength2,
-            rest,
+            restDay('six-day-rest'),
             strength3,
             powerConditioning2,
             endurance
@@ -740,15 +741,7 @@ export const programs = [
             'start. You\'ll complete the six workouts over two weeks, then repeat that ' +
             'cycle three times.',
         weeks: '6 weeks · 45–60 min sessions',
-        workouts: [
-            strength1,
-            powerConditioning1,
-            strength2,
-            rest,
-            powerConditioning2,
-            strength3,
-            endurance
-        ]
+        workouts: []
     }
 ];
 
@@ -954,13 +947,14 @@ const warmupExercises = [
 ];
 
 for (const plan of programs) {
-    for (const workout of plan.workouts) workout.warmup = warmupExercises;
+    for (const workout of plan.workouts) {
+        workout.warmup = workout.restDay ? [] : warmupExercises;
+    }
 }
 
 const threeDay = programs.find(plan => plan.id === 'three-day');
-const weekOne = threeDay.workouts;
-const warmupOnly = (week, slot) => ({
-    id: `three-${week}-warmup-${slot}`,
+const warmupOnly = id => ({
+    id,
     title: 'Warm-up',
     focus: 'Preparation',
     description: 'A short movement preparation session. Complete the shared warm-up at an easy, comfortable pace.',
@@ -970,12 +964,22 @@ const warmupOnly = (week, slot) => ({
     warmup: warmupExercises
 });
 threeDay.duration = '2 weeks';
-threeDay.weeks = '2 weeks · 3 training days + warm-up days';
+threeDay.weeks = '2 weeks · 3 training days per week';
 threeDay.workouts = [
-    {...weekOne[0]}, warmupOnly(1, 1),
-    {...weekOne[1]}, warmupOnly(1, 2),
-    {...weekOne[2]}, warmupOnly(1, 3),
-    {...weekOne[0], id: 'three-a-week-2'}, warmupOnly(2, 1),
-    {...weekOne[1], id: 'three-b-week-2'}, warmupOnly(2, 2),
-    {...weekOne[2], id: 'three-c-week-2'}, warmupOnly(2, 3)
+    // Week 1: each array position maps to Monday through Sunday.
+    {...strength1, id: 'three-week-1-strength-1'},
+    warmupOnly('three-week-1-warmup-1'),
+    {...powerConditioning1, id: 'three-week-1-power-conditioning-1'},
+    warmupOnly('three-week-1-warmup-2'),
+    {...strength2, id: 'three-week-1-strength-2'},
+    warmupOnly('three-week-1-warmup-3'),
+    restDay('three-week-1-rest'),
+    // Week 2 is specified independently, so its workouts can differ from week 1.
+    {...powerConditioning2, id: 'three-week-2-power-conditioning-2'},
+    warmupOnly('three-week-2-warmup-1'),
+    {...strength3, id: 'three-week-2-strength-3'},
+    warmupOnly('three-week-2-warmup-2'),
+    {...endurance, id: 'three-week-2-endurance'},
+    warmupOnly('three-week-2-warmup-3'),
+    restDay('three-week-2-rest')
 ];

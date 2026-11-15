@@ -76,7 +76,7 @@ export default function App() {
     }
 
     function start() {
-        if (!workout || saved.activeTimer) return;
+        if (!workout || workout.restDay || saved.activeTimer) return;
         setSaved(s => ({
             ...s,
             activeTimer: {
@@ -211,8 +211,8 @@ export default function App() {
                             setWarmupOpen(Boolean(item.warmupOnly));
                             setExercisesOpen(true)
                         }}><span className="workout-day">{scheduleLabel(program, index)}</span><span
-                            className="workout-title">{item.title}<small>{item.warmupOnly ? 'Warm-up only' : `${item.focus} · ${item.exercises.length} exercises`}</small></span><span
-                            className="workout-duration"><Clock3 size={14}/>{item.duration}</span>{done.length > 0 &&
+                            className="workout-title">{item.title}<small>{item.restDay ? 'Rest day' : item.warmupOnly ? 'Warm-up only' : `${item.focus} · ${item.exercises.length} exercises`}</small></span>{!item.restDay && <span
+                            className="workout-duration"><Clock3 size={14}/>{item.duration}</span>}{done.length > 0 &&
                             <span className="done-chip"><Check size={13}/>{localDate(done.at(-1))}</span>}<span
                             className="row-arrow">↗</span></button>
                     })}</section>
@@ -227,23 +227,24 @@ export default function App() {
                     <div className="workout-hero">
                         <div className="eyebrow">{workout.focus.toUpperCase()}</div>
                         <h1>{workout.title}<span className="title-period">.</span></h1>
-                        <div className="workout-quick"><span><Clock3 size={15}/>{workout.duration}</span><span><Dumbbell
+                        {!workout.restDay && <div className="workout-quick"><span><Clock3 size={15}/>{workout.duration}</span><span><Dumbbell
                             size={15}/>{workout.warmupOnly ? 'Warm-up only' : `${workout.warmup.length} warm-up + ${workout.exercises.length} exercises`}</span>
-                        </div>
+                        </div>}
                         <p>{workout.description}</p>{completed &&
                         <div className="completion-banner"><span className="completion-check"><Check size={17}/></span>
                             <div className="completion-history">
                                 <span>WORKOUT HISTORY</span>{history.slice().reverse().map((date, index) => <strong
                                 key={`${date}-${index}`}>{localDate(date)}</strong>)}</div>
                         </div>}
-                        <button className={`start-button ${saved.activeTimer ? 'is-disabled' : ''}`} onClick={start}
+                        {!workout.restDay && <button className={`start-button ${saved.activeTimer ? 'is-disabled' : ''}`} onClick={start}
                                 disabled={Boolean(saved.activeTimer)}><Play size={15}
                                                                             fill="currentColor"/>{saved.activeTimer ? 'A WORKOUT TIMER IS RUNNING' : 'START THIS WORKOUT'}<span>↗</span>
-                        </button>
-                        {saved.activeTimer &&
+                        </button>}
+                        {!workout.restDay && saved.activeTimer &&
                             <p className="timer-hint">Stop your current timer before starting another workout.</p>}
                     </div>
-                    <ExerciseSection title="Warm-up" label="GET READY" exercises={workout.warmup}
+                    {workout.restDay && <p className="rest-day-note">No workout is scheduled today. Rest and recover before your next session.</p>}
+                    {!workout.restDay && <><ExerciseSection title="Warm-up" label="GET READY" exercises={workout.warmup}
                                      expandedExercise={expandedExercise} onToggle={setExpandedExercise}
                                      sectionId="warmup" isOpen={warmupOpen}
                                      onSectionToggle={() => setWarmupOpen(open => !open)}/>{!workout.warmupOnly &&
@@ -252,7 +253,7 @@ export default function App() {
                                      onSectionToggle={() => setExercisesOpen(open => !open)}/>}{workout.warmupOnly &&
                         <p className="warmup-only-note">This session is your shared warm-up. Move comfortably and finish
                             feeling
-                            ready.</p>}</section><aside className="side-note"><div className="side-note-icon"><Snowflake size={17}/>
+                            ready.</p>}</>}</section><aside className="side-note"><div className="side-note-icon"><Snowflake size={17}/>
             </div>
             <div className="eyebrow">TRAIN SMART</div>
             <p>Quality reps matter more than speed. Take a breather whenever you need one.</p>

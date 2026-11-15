@@ -26,7 +26,7 @@ The home page links to an information page with editable sections for content pr
 
 ## Add or change training content
 
-Edit `src/data/programs.js`; the app renders this data automatically. A program has an `id`, display name, summary and `workouts` array. Give each program and workout a unique ID. Each workout includes a unique `id`, title, focus, description, duration, an `exercises` array and the shared `warmup` array. Do not add a weekday to a workout: the schedule assigns weekdays from list order, starting Monday. Set `workoutsPerWeek` on the program to control where the weekday sequence restarts; it defaults to seven. If the program has multiple weekly groups, the row also shows the derived week number. The 14 sample warm-up moves are defined once and automatically attached to every workout, so edit that shared list to change the warm-up everywhere. The three-day plan schedule is assembled at the bottom of the file: its strength, conditioning and power sessions are repeated in week two, with warm-up-only sessions placed in sequence between the training workouts. Their displayed weekdays are derived from the list order.
+Edit `src/data/programs.js`; the app renders this data automatically. A program has an `id`, display name, summary and `workouts` array. Give each program and workout a unique ID. Each workout includes a unique `id`, title, focus, description, duration, an `exercises` array and (except rest days) the shared `warmup` array. Do not add a weekday to a workout: the schedule assigns weekdays from list order, starting Monday. Set `workoutsPerWeek` on the program to control where the weekday sequence restarts; it defaults to seven. The three-day plan has 14 explicit entries, one for each day across two weeks, so you can change either week independently. Put a rest-day object at any position in the `workouts` array; the day labels after it are generated from the new order.
 
 An exercise looks like:
 
@@ -45,7 +45,7 @@ An exercise looks like:
 }
 ```
 
-Copy an existing object and edit its fields. Add/remove workouts or exercises in their respective arrays. Keep workout IDs unique within each program because they are used for progress. For local exercise images, put files under `public/images/` and use a URL such as `/images/step-up.jpg`. `warmupOnly: true` marks a schedule entry that consists of the shared warm-up alone; it still has its own timer and completion record.
+Copy an existing object and edit its fields. Add/remove workouts or exercises in their respective arrays. Keep workout IDs unique within each program because they are used for progress. For local exercise images, put files under `public/images/` and use a URL such as `/images/step-up.jpg`. `warmupOnly: true` marks a schedule entry that consists of the shared warm-up alone; it still has its own timer and completion record. A rest day can be added as `{ id: 'week-1-rest', title: 'Rest day', focus: 'Recovery', description: 'Take a rest day.', restDay: true, exercises: [], warmup: [] }`. Rest days appear in the schedule, but do not show exercise sections or a workout timer.
 
 The sample material is illustrative and is not individualized medical or coaching advice.
 
