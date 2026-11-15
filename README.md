@@ -2,6 +2,39 @@
 
 A responsive React single-page application for two sample ski-preparation training plans. Workout completion history (one local date per completed session) and an active timer are stored in browser `localStorage`; no account or server is required.
 
+## About the application
+
+This application is a ski-preparation program adapted from a PDF. It makes it easier to navigate the program and exercises during workouts, and to track workout history.
+
+It was created with ChatGPT as a personal “pet project.”
+
+The application stores data locally in your web browser. Data is not synced between devices, and progress may be lost when the browser session expires.
+
+## Sources and attribution
+
+The program is based on a PDF provided as a gift to CARV customers by [CARV](https://getcarv.com/). It was put together by **Katie White**, a member of the **PSIA Alpine National Team**. She has coached for 14 winter seasons in Montana and 11 in Chile, leads instructor training at Yellowstone Club in Montana, and directs the ski school at Portillo in Chile. The program aims to help you extend your skiing days and get the most enjoyment out of them.
+
+The exercise images are from the same PDF and feature:
+
+- **Abi Taylor**, personal trainer and gym director at Stanza Fitness in the UK, with more than 10 years of coaching experience.
+- **Paul McConnell**, level 3 personal trainer and Functional Range Conditioning mobility specialist based in the UK.
+
+Other sources:
+
+- [Carioca exercise](https://youtube.com/shorts/faa3ZXWR3Cc?si=jE4FZPz5EaQEsWmV)
+- [Lateral in-out Agility ladder exercise](https://youtube.com/shorts/dNSjoSLNCLM?si=eQqKw__vCNgeLvRt)
+- [Front in-out Agility ladder exercise](https://youtube.com/shorts/6Eyer7ZiByI?si=VZ64bfBOaChIRGct)
+
+## About the application's author
+
+This application was created by **Natalia Lelekova**, a skiing fan who can’t wait for the season to start. It is a personal project to organize ski-preparation workouts.
+
+## Important
+
+This web application is intended for the author’s personal use. If anyone believes it infringes their copyright, the author will remove it immediately.
+
+For such matters, please [create an issue in my GitHub repository](https://github.com/Lelekova/skipreptraining/issues).
+
 ## Run locally
 
 Install Node.js (current LTS), then in this folder run:
