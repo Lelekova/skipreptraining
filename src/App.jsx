@@ -206,7 +206,9 @@ export default function App() {
                         ski-preparation program that was made out of a program in a PDF format.
                         The aim of the application is to make it easier to navigate through the program and exercises
                         during the workout, plus to track the history of the workouts. <br/>
-                        It is created by using ChatGPT as a "pet-project" for personal use.
+                        It is created by using ChatGPT as a "pet-project" for personal use. <br/>
+                        This application stores data locally in a web browser, therefore there is no data sync
+                        between the devices, and the progress might be lost due to the session expiry.
                         </p></section>
                     <section className="info-card"><h2>Sources and attribution</h2><p>
                         The program described in the application is based on the program provided by
